@@ -48,6 +48,9 @@ function inline(text: string, keyBase: number): ReactNode[] {
       const url = safeUrl(part.slice(close + 2, -1).split(/\s+/)[0], true);
       if (url) {
         nodes.push(
+          // Markdown images can come from CMS-managed domains; next/image
+          // would require every future domain to be hard-coded in config.
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             key={mk}
             src={url}
