@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Inner, text, asRecord } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { getProducts } from "@/lib/queries";
-import { Section, SectionHeading } from "@/components/site/section";
+import { Section } from "@/components/site/section";
 import { Reveal } from "@/components/site/reveal";
 
 export async function ProductsSection({ content }: { content: Inner }) {
@@ -23,18 +24,29 @@ export async function ProductsSection({ content }: { content: Inner }) {
   return (
     <Section id="products" className="gradient-top border-t border-border/40">
       <div className="flex items-end justify-between gap-6">
-        <SectionHeading
-          align="left"
-          className="!mb-10"
-          splitAccent
-          eyebrow={c.eyebrow ? text(c.eyebrow) : "Products"}
-          title={c.title ? text(c.title) : "Software products for real operations"}
-          description={
-            c.description
-              ? text(c.description)
-              : "We don't just build for clients — we build products of our own, designed to solve operational problems that outgrow spreadsheets."
-          }
-        />
+        <div className="mb-10 flex max-w-3xl flex-col gap-4">
+          {c.eyebrow ? (
+            <span className={cn("eyebrow", text(c.eyebrow))}>
+              {text(c.eyebrow)}
+            </span>
+          ) : (
+            <span className="eyebrow">Products</span>
+          )}
+          <h2 className="text-balance text-title font-bold text-foreground">
+            {c.title ? text(c.title) : "Software products for real operations"}
+          </h2>
+          {c.description ? (
+            <p className="text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+              {text(c.description)}
+            </p>
+          ) : (
+            <p className="text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+              We don&apos;t just build for clients — we build products of our
+              own, designed to solve operational problems that outgrow
+              spreadsheets.
+            </p>
+          )}
+        </div>
         <Link
           href="/products"
           className="group hidden shrink-0 items-center gap-1.5 pb-1 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-primary transition-colors hover:text-primary/80 md:inline-flex"
@@ -70,7 +82,9 @@ export async function ProductsSection({ content }: { content: Inner }) {
             </div>
             <div className="flex min-w-0 flex-col gap-4">
               <div className="flex flex-wrap items-center gap-3">
-                <h3 className="text-2xl font-bold tracking-tight">{featured.name}</h3>
+                <h3 className="text-2xl font-bold tracking-tight">
+                  {featured.name}
+                </h3>
                 {featured.status ? (
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/60 px-2.5 py-1 font-mono text-[0.62rem] font-medium uppercase tracking-wider text-muted-foreground">
                     <span className="size-1.5 animate-pulse rounded-full bg-success" />
@@ -146,7 +160,9 @@ export async function ProductsSection({ content }: { content: Inner }) {
                   )}
                 </div>
                 <div className="flex flex-1 flex-col gap-2 p-5">
-                  <h3 className="text-base font-semibold tracking-tight">{p.name}</h3>
+                  <h3 className="text-base font-semibold tracking-tight">
+                    {p.name}
+                  </h3>
                   {p.tagline ? (
                     <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
                       {text(p.tagline)}

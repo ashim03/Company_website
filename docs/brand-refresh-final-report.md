@@ -1,4 +1,4 @@
-# CodAstra Labs — Brand Refresh / Readability & Admin Pass: Final Report
+﻿# CodAstra Labs — Brand Refresh / Readability & Admin Pass: Final Report
 
 **Date:** 2026-09-23 · **Project:** CodAstra Labs (Next.js 16.3.5 · React 19 · Tailwind CSS v4 · TypeScript) · **Status: ✅ complete**
 
@@ -65,3 +65,11 @@ Rewrote `:root` to the **official CodAstra palette** derived from the logo:
 
 > The only levituation a quick pass needs to hold: entrance animations keep **transform+opacity** effects with an always-settled terminal — opacity 1, filter none — so no readable text is ever blurred at rest on light or dark, at any breakpoint, hard or soft refresh.
 </content>
+
+## §29 Follow-up: blur root cause — lingering `will-change`, plus theme-adaptive header
+
+**Root cause (the one my earlier opacity/filter probes could not see):** every entrance rule declared `will-change: opacity, transform`, but the *settled visible* blocks only reset opacity / filter / transform — they never released `will-change`. On Windows + Chromium a lingering `will-change` keeps text on its own promoted compositing layer, which **disables subpixel antialiasing permanently** — text measures `opacity:1 / filter:none` yet *looks* soft/fuzzy. That is exactly the recurring `Classes & training` / `Products` / `Talk to CodAstraLabs` blur: those are the words that animate via will-change-bearing reveals.
+
+**Fix (globals.css, 4 settled blocks):** `.motion-rise-visible`, `.rise-word-visible`, `.split-head-visible`, and the shared `.motion-reveal-visible / .reveal-word-visible` now also set `will-change: auto` the moment the element settles — releasing the composited layer so text regains subpixel AA. Braces 145/145, braces balanced, tsc 0, eslint 0, build 37/37 pages ✓.
+
+**Header theme pass (header.tsx):** the sticky navbar is now theme-aware — `bg-background/98 border-border` in light (white bar), `dark:bg-[#0a1128]/98 dark:border-[#22305c]` deep-navy band in dark, with the titlebar inset line and CTA shadow kept token-scoped. Verified live: light renders a white bar, dark renders the navy band, matching the footer bookend in both themes.

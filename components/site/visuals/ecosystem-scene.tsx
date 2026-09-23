@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import {
-  Sparkles,
   ArrowUpRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { VisualFrame, NodeCanvas, FlowLine, GlowDot, type Point } from "./shared";
 import { ServiceIcon } from "@/components/site/service-icon";
+import { BrandMark } from "@/components/site/brand-mark";
 
 /**
  * Home hero visual: the CodAstraLabs digital ecosystem. A central identity
@@ -113,18 +113,13 @@ export function EcosystemScene({
         />
 
         {/* Center identity node */}
-        <div className="absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2">
-          <GlowDot className="absolute -top-2 left-1/2 -translate-x-1/2" />
-          <div className="grid size-24 place-items-center rounded-3xl gradient-border bg-card shadow-soft sm:size-28">
-            <div className="grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-400/15 sm:size-16">
-              <Sparkles className="size-7 text-primary sm:size-8" />
+        <div className="brand-center absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2">
+          <BrandMark className="mx-auto w-24 sm:w-28" />
+          <div className="absolute left-1/2 top-full mt-2 w-44 -translate-x-1/2 text-center">
+            <span className="text-primary font-semibold tracking-tight">CodAstra Labs</span>
+            <div className="mt-0.5 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
+              build · design · learn
             </div>
-          </div>
-          <div className="mt-2 text-center">
-            <span className="text-gradient font-semibold tracking-tight">CodAstraLabs</span>
-          </div>
-          <div className="mt-0.5 text-center font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-            build · design · learn
           </div>
         </div>
 

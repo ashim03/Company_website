@@ -3,7 +3,6 @@ import { ArrowRight, GraduationCap } from "lucide-react";
 import { Inner, text, asRecord, stringArray } from "@/lib/types";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
-import { RevealText } from "@/components/site/reveal-text";
 import { LearningJourney } from "@/components/site/visuals/learning-journey";
 
 const DEFAULT_POINTS = [
@@ -42,14 +41,9 @@ export function ClassesSection({ content }: { content: Inner }) {
             <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="flex flex-col gap-5">
                 <span className="eyebrow">{eyebrow}</span>
-                <RevealText
-                  text={title}
-                  highlight={3}
-                  rise
-                  initialVisible
-                  as="h2"
-                  className="text-title font-semibold"
-                />
+                <h2 className="text-balance text-title font-semibold text-black dark:text-white">
+                  {title}
+                </h2>
                 <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
                   {description}
                 </p>

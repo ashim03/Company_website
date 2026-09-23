@@ -97,7 +97,6 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
@@ -196,9 +195,9 @@
   }
 
   .text-title {
-    font-size: clamp(1.55rem, 1.05rem + 1.6vw, 2.4rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    font-size: clamp(1.75rem, 1.1rem + 2.4vw, 3.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
   /* Mono code-blip eyebrow:  // LABEL */
@@ -232,7 +231,7 @@
   @supports not (-webkit-background-clip: text) {
     .text-gradient,
     .text-gradient-animate {
-      color: #0088ff;
+      color: var(--primary);
       background-image: none;
     }
   }
@@ -250,14 +249,14 @@
      background-clip:text support. Use instead of .text-gradient on
      headlines and any text that must stay legible. */
   .text-accent {
-    color: #0088ff;
+    color: var(--primary);
   }
 
   /* Brand gradient — the exact blue → sky → cyan of the CodAstra logo.
      Solid background fill (buttons, chips, badges): no text clipping,
      so it renders identically everywhere. */
   .bg-brand {
-    background-image: linear-gradient(100deg, #3b82f6 0%, #38bdf8 55%, #22d3ee 100%);
+    background-image: linear-gradient(100deg, #244be8 0%, #3045c8 55%, #6416d9 100%);
   }
 
   /* Gradient hairline drawn on top of a section's border-t. */
@@ -339,125 +338,45 @@
     line-height: 1.75;
   }
 
-  /* -- Motion / entrance --------------------------------------- */
-  /* Content renders visible by default. Hidden entrance states only
-     apply once JS marks <html class="js">, so a no-JS or interrupted
-     page can never leave a section blank. */
-  .motion-reveal,
-  .reveal-word {
-    transition:
-      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  html.js .motion-reveal:not(.motion-reveal-visible) {
-    opacity: 0;
-    transform: translateY(24px) scale(0.985);
-    will-change: opacity, transform;
-    filter: none;
-  }
-
-  html.js .reveal-word:not(.reveal-word-visible) {
-    opacity: 0;
-    transform: translateY(28px) rotate(1.5deg);
-    filter: none;
-  }
-
-  html.js .motion-reveal.motion-reveal-visible,
-  html.js .reveal-word.reveal-word-visible {
+  /* Content remains fully readable before hydration and during entrances.
+     Only position changes; no opacity multiplication in nested reveals. */
+  .motion-reveal, .motion-rise,
+  .reveal-word, .rise-word,
+  .split-head, .rise-head {
     opacity: 1;
-    transform: none;
     filter: none;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Rise mode: transform-only entrance that never hides content —
-     used for above-the-fold copy so it is visible from first paint. */
-  .motion-rise {
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  .reveal-word, .rise-word, .split-head, .rise-head {
+    display: inline-block;
+    max-width: 100%;
   }
 
+  html.js .motion-reveal:not(.motion-reveal-visible),
   html.js .motion-rise:not(.motion-rise-visible) {
-    transform: translateY(22px);
-    will-change: transform;
+    transform: translateY(12px);
   }
-
-  html.js .motion-rise.motion-rise-visible {
-    transform: none;
-  }
-
-  .reveal-word {
-    display: inline-block;
-  }
-
-  .rise-word {
-    display: inline-block;
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  html.js .rise-word:not(.rise-word-visible) {
-    transform: translateY(26px) rotate(1deg);
-  }
-
-  html.js .rise-word.rise-word-visible {
-    transform: none;
-  }
-
-  /* Directional scroll reveals — elements sweep in from the sides /
-     above, the agency "split slider" cascade. */
   html.js .motion-reveal-down:not(.motion-reveal-visible) {
-    opacity: 0;
-    transform: translateY(-28px) scale(0.985);
-    will-change: opacity, transform;
+    transform: translateY(-12px);
   }
-
   html.js .motion-reveal-left:not(.motion-reveal-visible) {
-    opacity: 0;
-    transform: translateX(-48px);
-    will-change: opacity, transform;
+    transform: translateX(-12px);
   }
-
   html.js .motion-reveal-right:not(.motion-reveal-visible) {
-    opacity: 0;
-    transform: translateX(48px);
-    will-change: opacity, transform;
+    transform: translateX(12px);
   }
-
-  /* Split heading: the lead cluster slides in from the left while the
-     accent cluster slides in from the right — the two-beat headline
-     reveal. `split-head` fades with the slide; `rise-head` is
-     transform-only so above-the-fold copy stays visible. */
-  .split-head,
-  .rise-head {
-    display: inline-block;
-    transition:
-      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  html.js .reveal-word:not(.reveal-word-visible),
+  html.js .rise-word:not(.rise-word-visible) {
+    transform: translateY(6px);
   }
-
-  html.js .split-head-left:not(.split-head-visible) {
-    opacity: 0;
-    transform: translateX(-52px);
-    will-change: opacity, transform;
-  }
-
-  html.js .split-head-right:not(.split-head-visible) {
-    opacity: 0;
-    transform: translateX(52px);
-    will-change: opacity, transform;
-  }
-
+  html.js .split-head-left:not(.split-head-visible),
   html.js .rise-head-left:not(.split-head-visible) {
-    transform: translateX(-52px);
+    transform: translateX(-8px);
   }
-
+  html.js .split-head-right:not(.split-head-visible),
   html.js .rise-head-right:not(.split-head-visible) {
-    transform: translateX(52px);
-  }
-
-  html.js .split-head-visible {
-    opacity: 1;
-    transform: none;
+    transform: translateX(8px);
   }
 
   /* -- Keyframe animations -------------------------------------- */
@@ -501,7 +420,7 @@
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-14px);
+      transform: translateY(-6px);
     }
   }
 
@@ -577,7 +496,7 @@
   }
 
   .animate-grid {
-    animation: grid-pan 3s linear infinite;
+    animation: grid-pan 12s linear infinite;
   }
 
   @keyframes ping-ring {
@@ -705,88 +624,40 @@
       animation: none !important;
     }
   }
-}/* ============================================================
-   GLOBAL TOP-SECTION SETTLE GUARANTEE (single shared rule)
-   ---------------------------------------------------------------
-   Every page's top/hero/intro band is covered by ONE rule set so a
-   faded/blurred/washed heading can never reproduce on any route.
-   These are additive terminal-state guarantees: entrance animations
-   (Reveal / motion-*) still run, but the END state is always crisp,
-   fully opaque, unblurred, non-transformed text — reading > movement.
-
-   Also hardens light-theme contrast for the shared page-header and
-   hero copy so headings/promo/eyebrows never fall below readable
-   alpha on the pale background.
-   ============================================================ */
-
-/* 1) Terminal frame — anything that finished animating keeps full
-      opacity, zero blur/filter, zero residual transform. Belt-and-
-      braces: even if a transition gets interrupted mid-flip, the
-      element cannot rest below this state. */
-.motion-reveal-visible,
-.motion-rise-visible {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
 }
 
-/* 2) Page top: always fully painted once shown — never stuck faded.
-      Wraps hero, page-header and section-intro so ALL routes get the
-      same "loud on top" guarantee without per-file edits (global
-      root cause, not per-page patches). */
-.page-header-content,
-.page-header-content *,
-.hero-copy,
-.hero-copy *,
-.section-intro,
-.section-intro * {
-  opacity: inherit;
+.site-header {
+  background: #ffffff;
+  --foreground: #101b35;
+  --muted-foreground: #46536c;
+  --primary: #244be8;
+  --secondary: #eef2fb;
+  --popover: #ffffff;
+  --border: #e2e8f3;
 }
 
-/* 3) Light-theme readability for the shared page-header/hero text —
-      the exact tokens the parser flagged as washed. Keep the body a
-      strong dark gray, heading near-black navy, accent strong blue.
-      Only active in light mode via the media query below. */
-@media (prefers-color-scheme: light) {
-  .page-header-content .eyebrow,
-  .hero-copy .eyebrow,
-  .section-intro .eyebrow {
-    color: #1e3fae;
-  }
-  .page-header-content h1,
-  .page-header-content h2,
-  .hero-copy h1,
-  .hero-copy h2,
-  .section-intro h1,
-  .section-intro h2 {
-    color: #0f172a;
-  }
-  .page-header-content p,
-  .hero-copy p,
-  .section-intro p {
-    color: #475569;
-  }
-  .page-header-content .text-gradient,
-  .hero-copy .text-gradient,
-  .section-intro .text-gradient {
-    background-image: linear-gradient(100deg, #3322dd, #0088ff 55%, #22d3ee);
-  }
+.dark .site-header {
+  background: #10192c;
+  --foreground: #f4f7ff;
+  --muted-foreground: #c1cce5;
+  --primary: #60a5fa;
+  --secondary: #182442;
+  --popover: #0e1938;
+  --border: #26344d;
 }
 
-/* 4) Loose anti-wash for decorative layers that every top band uses —
-      keep gradient/glow/veil translucent layers BEHIND the text. */
-.page-header,
-.page-hero,
-.section-intro {
-  position: relative;
-  isolation: isolate;
+.brand-mark,
+.brand-center {
+  mix-blend-mode: multiply;
 }
-.page-header .aurora,
-.page-header .network,
-.page-header > :first-child:not(h1, .container),
-.page-hero .aurora,
-.page-hero .network {
-  pointer-events: none;
+.dark .brand-mark,
+.dark .brand-center,
+footer .brand-mark {
+  mix-blend-mode: screen;
+}
+.dark .brand-mark img,
+footer .brand-mark img {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* Footer — always the premium dark navy gradient regardless of theme

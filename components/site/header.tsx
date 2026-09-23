@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { getNavTree } from "@/lib/queries";
 import { getSettings } from "@/lib/site-settings";
@@ -12,7 +12,7 @@ export async function Header() {
   const [nav, settings] = await Promise.all([getNavTree(), getSettings()]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#E8EAF4] bg-white/98 shadow-[0_4px_20px_rgba(25,35,100,0.05)] backdrop-blur-sm">
+    <header className="site-header sticky top-0 z-40 border-b border-border text-foreground shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
       <Container className="flex h-16 items-center justify-between gap-4">
         <Logo logo={settings.logo} name={settings.companyName} priority />
 

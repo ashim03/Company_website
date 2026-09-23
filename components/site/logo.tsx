@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { BrandMark } from "@/components/site/brand-mark";
 
 export function Logo({
   logo,
@@ -21,7 +22,9 @@ export function Logo({
       className={cn("group flex items-center gap-2.5", className)}
       aria-label={`${name} — home`}
     >
-      {logo ? (
+      {!logo || logo === "/codastralabs-logo.jpeg" ? (
+        <BrandMark className={imageClassName} preload={priority} />
+      ) : logo ? (
         <Image
           src={logo}
           alt={`${name} logo`}
@@ -29,7 +32,7 @@ export function Logo({
           height={38}
           priority={priority}
           className={cn(
-            "h-9 w-9 rounded-lg object-contain ring-1 ring-border",
+            "h-10 w-14 object-contain",
             imageClassName
           )}
         />
@@ -42,8 +45,8 @@ export function Logo({
         </span>
       )}
       <span className="text-[1.05rem] font-semibold tracking-[-0.01em]">
-        {name.split(" ")[0]}
-        <span className="text-gradient"> Labs</span>
+        {name.replace(/\s*labs\s*$/i, "")}
+        <span className="text-primary"> Labs</span>
       </span>
     </Link>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useEntrance } from "@/components/site/use-entrance";
 import { cn } from "@/lib/utils";
 
 function splitWords(text: string): string[] {
@@ -14,8 +15,7 @@ function accentCount(words: string[]): number {
 /**
  * Two-beat headline reveal: the lead cluster slides in from the left
  * while the trailing accent cluster slides in from the right. Content
- * renders visible by default; hidden states only apply once JS marks
- * <html class="js">. `rise` is transform-only for above-the-fold copy.
+ * stays fully opaque before hydration and throughout the entrance.
  */
 export function SplitHeading({
   text,
@@ -35,52 +35,7 @@ export function SplitHeading({
   stagger?: number;
   as?: React.ElementType;
 } & Omit<React.HTMLAttributes<HTMLHeadingElement>, "children">) {
-  const ref = React.useRef<HTMLHeadingElement | null>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    let timer = 0;
-    const reveal = () => {
-      if (!timer) timer = window.setTimeout(() => setVisible(true), 0);
-    };
-    // Reveal immediately when already on screen so above-the-fold
-    // headings can never stay hidden waiting on an observer.
-    let rect: DOMRect | undefined;
-    try {
-      rect = node.getBoundingClientRect();
-    } catch {
-      /* ignore */
-    }
-    if (rect && rect.top < window.innerHeight) {
-      return reveal();
-    }
-    if (typeof IntersectionObserver === "undefined") {
-      return reveal();
-    }
-    let observer: IntersectionObserver | null = null;
-    try {
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              setVisible(true);
-              observer?.disconnect();
-            }
-          }
-        },
-        { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
-      );
-      observer.observe(node);
-    } catch {
-      return reveal();
-    }
-    return () => {
-      window.clearTimeout(timer);
-      observer?.disconnect();
-    };
-  }, []);
+  const { ref, visible } = useEntrance<HTMLHeadingElement>();
 
   const words = splitWords(text);
   const split = Math.max(0, words.length - accentCount(words));
@@ -114,7 +69,7 @@ export function SplitHeading({
           visible && "split-head-visible",
           accentClassName
         )}
-        style={start ? { transitionDelay: `${stagger}ms` } : undefined}
+        style={start ? { transitionDelay: `${Math.min(Math.max(stagger, 0), 150)}ms` } : undefined}
       >
         {accent || text}
       </span>

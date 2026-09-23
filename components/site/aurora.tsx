@@ -61,7 +61,7 @@ export function Aurora({
   return (
     <div
       aria-hidden="true"
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
+      className={cn("pointer-events-none absolute inset-0 isolate overflow-hidden", className)}
     >
       {chips ? (
         <div

@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Package, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { BrandMark } from "@/components/site/brand-mark";
 import { cn } from "@/lib/utils";
 import { VisualFrame, NodeCanvas, FlowLine, GlowDot, type Point } from "./shared";
 import { ServiceIcon } from "@/components/site/service-icon";
@@ -65,11 +66,9 @@ export function ServicesEcosystem({
         </NodeCanvas>
 
         {/* Core hub */}
-        <div className="absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 text-center">
-          <div className="grid size-20 place-items-center rounded-3xl gradient-border bg-card shadow-soft sm:size-24">
-            <Package className="size-9 text-primary sm:size-11" />
-          </div>
-          <div className="mt-2 font-mono text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-foreground">
+        <div className="brand-center absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 text-center">
+          <BrandMark className="mx-auto w-20 sm:w-24" />
+          <div className="absolute left-1/2 top-full mt-2 w-40 -translate-x-1/2 font-mono text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-foreground">
             your operations
           </div>
         </div>

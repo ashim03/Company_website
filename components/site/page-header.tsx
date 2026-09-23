@@ -49,7 +49,7 @@ export function PageHeader({
               as="h1"
               rise
               text={title}
-              className="text-display text-foreground"
+              className="text-display font-semibold text-foreground"
             />
           ) : (
             <Reveal rise delay={60}>

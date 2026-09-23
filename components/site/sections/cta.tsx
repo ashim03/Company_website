@@ -3,12 +3,13 @@ import { ArrowRight } from "lucide-react";
 import { Inner, text, asRecord } from "@/lib/types";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
-import { RevealText } from "@/components/site/reveal-text";
 import { cn } from "@/lib/utils";
 
 export function CtaSection({ content }: { content: Inner }) {
   const c = asRecord(content);
-  const title = c.title ? text(c.title) : "Have an operation that needs software?";
+  const title = c.title
+    ? text(c.title)
+    : "Have an operation that needs software?";
   const description =
     c.description || c.subtitle
       ? text(c.description || c.subtitle)
@@ -34,12 +35,12 @@ export function CtaSection({ content }: { content: Inner }) {
               aria-hidden="true"
             />
             <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-6 text-center">
-              <span className="eyebrow">{text(c.eyebrow) || "Ready when you are"}</span>
-              <RevealText
-                text={title}
-                highlight={1}
-                className="text-title font-semibold"
-              />
+              <span className="eyebrow">
+                {text(c.eyebrow) || "Ready when you are"}
+              </span>
+              <h3 className="text-balance text-title font-extrabold text-black dark:text-white">
+                {title}
+              </h3>
               <p className="text-pretty text-base leading-7 text-muted-foreground">
                 {description}
               </p>
@@ -58,7 +59,7 @@ export function CtaSection({ content }: { content: Inner }) {
                   <Link
                     href={secondaryHref}
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/40 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-all hover:border-primary/50 hover:text-primary"
+                      "inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/40 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-all hover:border-primary/50 hover:text-primary",
                     )}
                   >
                     {secondaryLabel}
