@@ -1,0 +1,414 @@
+// ------------------------------------------------------------------
+// CodAstra Labs — Prisma schema
+// PostgreSQL via Prisma ORM (Prisma Postgres through the Vercel marketplace).
+// ------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum EnquiryStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  NEW
+  REVIEWING
+  ACCEPTED
+  WAITLISTED
+  REJECTED
+  ARCHIVED
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum Visibility {
+  VISIBLE
+  HIDDEN
+}
+
+// ------------------------------------------------------------------
+// Auth
+// ------------------------------------------------------------------
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(EDITOR)
+  status       UserStatus @default(ACTIVE)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  sessions     Session[]
+  activity     ActivityLog[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  userAgent String?
+  ip        String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Failed admin login attempts — drives per-IP (and per-email) throttling.
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  ip        String?
+  createdAt DateTime @default(now())
+}
+
+// ------------------------------------------------------------------
+// Site-wide settings
+// ------------------------------------------------------------------
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g. "general", "seo", "branding", "social"
+  value     Json     // structured settings object
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Navigation + Pages
+// ------------------------------------------------------------------
+
+model NavigationItem {
+  id        String          @id @default(cuid())
+  label     String
+  url       String
+  isExternal Boolean        @default(false)
+  parentId  String?
+  sortOrder Int             @default(0)
+  isVisible Boolean         @default(true)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  parent    NavigationItem? @relation("NavTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children  NavigationItem[] @relation("NavTree")
+}
+
+model Page {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  description   String?
+  metaTitle     String?
+  metaDescription String?
+  ogImage       String?
+  status        ContentStatus  @default(DRAFT)
+  publishedAt   DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  sections      PageSection[]
+}
+
+model PageSection {
+  id         String        @id @default(cuid())
+  pageId     String
+  sectionType String       // hero | clients | intro | services | products | projects | process | testimonials | team | faqs | cta | stats | blog | why | content | promo | classes
+  title      String?
+  subtitle   String?
+  content    Json?         // flexible section content
+  settings   Json?         // section-level settings (background, spacing, columns...)
+  sortOrder  Int           @default(0)
+  isVisible  Boolean       @default(true)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  page       Page          @relation(fields: [pageId], references: [id], onDelete: Cascade)
+}
+
+// ------------------------------------------------------------------
+// Services
+// ------------------------------------------------------------------
+
+model Service {
+  id               String        @id @default(cuid())
+  name             String
+  slug             String        @unique
+  shortDescription String
+  fullDescription  String
+  icon             String? // icon key or media url
+  coverImage       String?
+  gallery          Json?         // array of media urls
+  benefits         Json?         // array of strings
+  features         Json?         // array of strings
+  technologies     Json?         // array of strings
+  relatedProjectIds Json?        // array of project ids
+  seoTitle         String?
+  seoDescription   String?
+  status           ContentStatus @default(DRAFT)
+  sortOrder        Int           @default(0)
+  publishedAt      DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Products
+// ------------------------------------------------------------------
+
+model Product {
+  id              String        @id @default(cuid())
+  name            String
+  slug            String        @unique
+  logo            String?
+  tagline         String?
+  shortDescription String
+  detailedDescription String?
+  screenshots     Json?
+  features        Json?
+  technology      String?
+  websiteUrl      String?
+  ctaLabel        String?
+  status          ContentStatus @default(DRAFT)
+  sortOrder       Int           @default(0)
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Projects / Portfolio / Case Studies
+// ------------------------------------------------------------------
+
+model Project {
+  id             String        @id @default(cuid())
+  name           String
+  slug           String        @unique
+  client         String?
+  industry       String?
+  projectType    String?
+  shortDescription String
+  problem        String?
+  solution       String?
+  outcome        String?
+  coverImage     String?
+  gallery        Json?
+  technology     Json?
+  serviceProvided String?
+  projectUrl     String?
+  completionDate DateTime?
+  featured       Boolean       @default(false)
+  articleUrl     String?       // link to a published case study blog article
+  testimonials   Json?         // optional inline client quote
+  seoTitle       String?
+  seoDescription String?
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Clients, Testimonials, Team, FAQs
+// ------------------------------------------------------------------
+
+model Client {
+  id        String    @id @default(cuid())
+  name      String
+  logo      String?
+  website   String?
+  industry  String?
+  sortOrder Int       @default(0)
+  featured  Boolean   @default(false)
+  isVisible Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Testimonial {
+  id        String  @id @default(cuid())
+  quote     String
+  author    String?
+  role      String?
+  company   String?
+  avatar    String?
+  source    String? // project / client this testimonial relates to
+  sortOrder Int     @default(0)
+  isVisible Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String  @id @default(cuid())
+  name      String
+  role      String?
+  bio       String?
+  photo     String?
+  email     String?
+  socials   Json?
+  sortOrder Int     @default(0)
+  isVisible Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Faq {
+  id        String  @id @default(cuid())
+  question  String
+  answer    String
+  category  String?
+  sortOrder Int     @default(0)
+  isVisible Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Blog
+// ------------------------------------------------------------------
+
+model BlogCategory {
+  id    String     @id @default(cuid())
+  name  String
+  slug  String     @unique
+  posts BlogPost[]
+}
+
+model BlogTag {
+  id    String     @id @default(cuid())
+  name  String
+  slug  String     @unique
+  posts BlogPost[] @relation("PostTags")
+}
+
+model BlogPost {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  excerpt     String?
+  content     String        // markdown, sanitized on render
+  coverImage  String?
+  authorName  String?
+  categoryId  String?
+  publishedAt DateTime?
+  status      ContentStatus @default(DRAFT)
+  featured    Boolean       @default(false)
+  seoTitle    String?
+  seoDescription String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  category    BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags        BlogTag[]     @relation("PostTags")
+}
+
+// ------------------------------------------------------------------
+// Media library + enquiries
+// ------------------------------------------------------------------
+
+model Media {
+  id        String   @id @default(cuid())
+  name      String
+  filename  String
+  type      String   // mime type
+  size      Int
+  width     Int?
+  height    Int?
+  url       String
+  pathname  String   @unique // blob pathname, e.g. services/web-development-abc.webp
+  alt       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactEnquiry {
+  id        String         @id @default(cuid())
+  name      String
+  company   String?
+  email     String
+  phone     String?
+  service   String?
+  budget    String?
+  message   String
+  status    EnquiryStatus  @default(NEW)
+  source    String?        // e.g. "contact"
+  ip        String?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+// ------------------------------------------------------------------
+// Classes: course catalog + enrollment requests
+// ------------------------------------------------------------------
+
+model Course {
+  id               String        @id @default(cuid())
+  name             String
+  slug             String        @unique
+  category         String?       // e.g. IT & Digital Skills, Digital Marketing, Graphic Design, Web Development
+  level            String?       // Beginner, Intermediate, Advanced, All levels
+  duration         String?       // e.g. "12 weeks"
+  mode             String?       // Online, On-campus, Hybrid
+  shortDescription String
+  description      String?       // longer detail copy shown on the Classes page
+  syllabus         Json?         // array of topics/technologies covered
+  prerequisites    Json?         // array of strings
+  price            String?       // display string, e.g. "NPR 35,000" or "Free intro class"
+  coverImage       String?
+  status           ContentStatus @default(DRAFT)
+  sortOrder        Int           @default(0)
+  publishedAt      DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model ClassEnrollment {
+  id         String           @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  course     String           // course display name at the time of the request
+  courseSlug String?
+  experience String?          // beginner | intermediate | advanced
+  schedule   String?          // preferred schedule/day-time
+  message    String?
+  status     EnrollmentStatus @default(NEW)
+  ip         String?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+}
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String   // e.g. "service.update", "media.delete"
+  entityType String?
+  entityId   String?
+  meta       Json?
+  createdAt  DateTime @default(now())
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// ------------------------------------------------------------------
+// Join table for Post <-> Tag (implicit m2m alternative not used; explicit is above).
+// BlogTagPost is declared immediately after BlogTag to keep relations resolvable.
+// ------------------------------------------------------------------

@@ -1,0 +1,790 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafe;
+  --foreground: #0e1526;
+  --card: #ffffff;
+  --card-foreground: #0e1526;
+  --popover: #ffffff;
+  --popover-foreground: #0e1526;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2fb;
+  --secondary-foreground: #263259;
+  --muted: #f1f4fb;
+  --muted-foreground: #45506e;
+  --accent: #e6edff;
+  --accent-foreground: #1e3fae;
+  --border: #e3e8f7;
+  --input: #d3dcf2;
+  --ring: #2563eb;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --radius: 0.75rem;
+  --shadow-card: 0 1px 2px rgb(14 21 38 / 0.05), 0 12px 32px -16px rgb(14 21 38 / 0.16);
+  --shadow-soft: 0 40px 80px -40px rgb(14 21 38 / 0.35);
+  --grid-line: rgb(37 99 235 / 0.07);
+}
+
+.dark {
+  --background: #060c1d;
+  --foreground: #e9edfa;
+  --card: #0b1430;
+  --card-foreground: #e9edfa;
+  --popover: #0e1938;
+  --popover-foreground: #e9edfa;
+  --primary: #3b82f6;
+  --primary-foreground: #080f21;
+  --secondary: #131e41;
+  --secondary-foreground: #d9e2fb;
+  --muted: #0d1834;
+  --muted-foreground: #9aa8cf;
+  --accent: #1a2a55;
+  --accent-foreground: #cfe0ff;
+  --border: #26355f;
+  --input: #314785;
+  --ring: #3b82f6;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.25), 0 14px 36px -18px rgb(0 0 0 / 0.6);
+  --shadow-soft: 0 44px 90px -44px rgb(0 0 0 / 0.75);
+  --grid-line: rgb(59 130 246 / 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 28%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--primary) 28%, transparent);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--primary) 45%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .animate-marquee,
+    .animate-marquee-reverse,
+    .animate-float,
+    .animate-drift,
+    .animate-spin-slow,
+    .animate-bob {
+      animation: none !important;
+    }
+  }
+}
+
+@layer utilities {
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 80rem;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .glass {
+    background: color-mix(in srgb, var(--background) 72%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .text-display {
+    font-size: clamp(2.4rem, 1.3rem + 3.4vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .text-title {
+    font-size: clamp(1.55rem, 1.05rem + 1.6vw, 2.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  /* Mono code-blip eyebrow:  // LABEL */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-geist-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .eyebrow::before {
+    content: "//";
+    color: color-mix(in srgb, var(--primary) 60%, transparent);
+  }
+
+  /* -- Gradient text & border machinery ------------------------- */
+  /* Solid accent fallback: if background-clip:text is unsupported the
+     gradient text must never render as invisible transparent text. */
+  .text-gradient {
+    background-image: linear-gradient(100deg, #3322dd, #0088ff 55%, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  @supports not (-webkit-background-clip: text) {
+    .text-gradient,
+    .text-gradient-animate {
+      color: #0088ff;
+      background-image: none;
+    }
+  }
+
+  .text-gradient-animate {
+    background-image: linear-gradient(100deg, #3322dd, #0088ff 25%, #22d3ee 50%, #0088ff 75%, #3322dd);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-x 7s linear infinite;
+  }
+
+  /* Readable solid accent for key copy — always renders regardless of
+     background-clip:text support. Use instead of .text-gradient on
+     headlines and any text that must stay legible. */
+  .text-accent {
+    color: #0088ff;
+  }
+
+  /* Brand gradient — the exact blue → sky → cyan of the CodAstra logo.
+     Solid background fill (buttons, chips, badges): no text clipping,
+     so it renders identically everywhere. */
+  .bg-brand {
+    background-image: linear-gradient(100deg, #3b82f6 0%, #38bdf8 55%, #22d3ee 100%);
+  }
+
+  /* Gradient hairline drawn on top of a section's border-t. */
+  .gradient-top {
+    position: relative;
+  }
+  .gradient-top::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(56, 189, 248, 0.55) 30%,
+      rgba(34, 211, 238, 0.55) 70%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, #3b82f6, #38bdf8 35%, transparent 58%, #22d3ee 85%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--foreground) 55%, transparent);
+    color: transparent;
+  }
+
+  .bg-noise {
+    position: relative;
+  }
+
+  .bg-noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .tech-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .prose-content p {
+    line-height: 1.75;
+  }
+
+  /* -- Motion / entrance --------------------------------------- */
+  /* Content renders visible by default. Hidden entrance states only
+     apply once JS marks <html class="js">, so a no-JS or interrupted
+     page can never leave a section blank. */
+  .motion-reveal,
+  .reveal-word {
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.js .motion-reveal:not(.motion-reveal-visible) {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+    will-change: opacity, transform;
+    filter: none;
+  }
+
+  html.js .reveal-word:not(.reveal-word-visible) {
+    opacity: 0;
+    transform: translateY(28px) rotate(1.5deg);
+    filter: none;
+  }
+
+  html.js .motion-reveal.motion-reveal-visible,
+  html.js .reveal-word.reveal-word-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Rise mode: transform-only entrance that never hides content —
+     used for above-the-fold copy so it is visible from first paint. */
+  .motion-rise {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.js .motion-rise:not(.motion-rise-visible) {
+    transform: translateY(22px);
+    will-change: transform;
+  }
+
+  html.js .motion-rise.motion-rise-visible {
+    transform: none;
+  }
+
+  .reveal-word {
+    display: inline-block;
+  }
+
+  .rise-word {
+    display: inline-block;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.js .rise-word:not(.rise-word-visible) {
+    transform: translateY(26px) rotate(1deg);
+  }
+
+  html.js .rise-word.rise-word-visible {
+    transform: none;
+  }
+
+  /* Directional scroll reveals — elements sweep in from the sides /
+     above, the agency "split slider" cascade. */
+  html.js .motion-reveal-down:not(.motion-reveal-visible) {
+    opacity: 0;
+    transform: translateY(-28px) scale(0.985);
+    will-change: opacity, transform;
+  }
+
+  html.js .motion-reveal-left:not(.motion-reveal-visible) {
+    opacity: 0;
+    transform: translateX(-48px);
+    will-change: opacity, transform;
+  }
+
+  html.js .motion-reveal-right:not(.motion-reveal-visible) {
+    opacity: 0;
+    transform: translateX(48px);
+    will-change: opacity, transform;
+  }
+
+  /* Split heading: the lead cluster slides in from the left while the
+     accent cluster slides in from the right — the two-beat headline
+     reveal. `split-head` fades with the slide; `rise-head` is
+     transform-only so above-the-fold copy stays visible. */
+  .split-head,
+  .rise-head {
+    display: inline-block;
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.js .split-head-left:not(.split-head-visible) {
+    opacity: 0;
+    transform: translateX(-52px);
+    will-change: opacity, transform;
+  }
+
+  html.js .split-head-right:not(.split-head-visible) {
+    opacity: 0;
+    transform: translateX(52px);
+    will-change: opacity, transform;
+  }
+
+  html.js .rise-head-left:not(.split-head-visible) {
+    transform: translateX(-52px);
+  }
+
+  html.js .rise-head-right:not(.split-head-visible) {
+    transform: translateX(52px);
+  }
+
+  html.js .split-head-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* -- Keyframe animations -------------------------------------- */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 32s) linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee var(--marquee-duration, 32s) linear infinite reverse;
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(40px, -30px) scale(1.1);
+    }
+    66% {
+      transform: translate(-30px, 24px) scale(0.93);
+    }
+  }
+
+  .animate-drift {
+    animation: drift 18s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .animate-bob {
+    animation: bob 5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .animate-blink {
+    animation: blink 1.1s step-end infinite;
+  }
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 14s linear infinite;
+  }
+
+  @keyframes gradient-x {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-120%);
+    }
+    100% {
+      transform: translateY(320%);
+    }
+  }
+
+  .animate-scan {
+    animation: scan 4.5s ease-in-out infinite;
+  }
+
+  @keyframes grid-pan {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 44px 44px;
+    }
+  }
+
+  .animate-grid {
+    animation: grid-pan 3s linear infinite;
+  }
+
+  @keyframes ping-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    80%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  .animate-ping-ring {
+    animation: ping-ring 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* -- Page-visual interplay ------------------------------------ */
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -180;
+    }
+  }
+
+  /* Marching-dots connection line for ecosystem/flow diagrams.
+     Dash is defined in the SVG element(s) it is applied to; the
+     keyframe only shifts the offset. Static dashes remain if the
+     animation is disabled. */
+  .animate-dash-flow {
+    animation: dash-flow 4s linear infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.32;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 3.4s ease-in-out infinite;
+  }
+
+  @keyframes bar-grow {
+    from {
+      transform: scaleY(0.16);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  /* Grow-up metric bars in product / engagement mini-UI. Base state
+     (no animation) renders the full-height bar, so a reduced-motion
+     or no-JS fallback is a static, complete chart. */
+  .animate-bar-grow {
+    transform-origin: bottom;
+    animation: bar-grow 1.5s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+  }
+
+  @keyframes shimmer-x {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer-x 2.6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    70%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
+  .animate-pulse-ring-soft {
+    animation: pulse-ring-soft 3.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-reveal,
+    .reveal-word,
+    .motion-rise,
+    .rise-word,
+    .split-head,
+    .rise-head {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      transition: none !important;
+      will-change: auto !important;
+    }
+
+    /* Freeze all pure-CSS decorative loops: the static base layout is
+       already complete, so a frozen frame renders full content. */
+    .animate-float,
+    .animate-bob,
+    .animate-drift,
+    .animate-blink,
+    .animate-scan,
+    .animate-grid,
+    .animate-marquee,
+    .animate-marquee-reverse,
+    .animate-ping-ring,
+    .animate-pulse-soft,
+    .animate-pulse-ring-soft,
+    .animate-bar-grow,
+    .animate-shimmer,
+    .animate-dash-flow,
+    .animate-spin-slow {
+      animation: none !important;
+    }
+  }
+}/* ============================================================
+   GLOBAL TOP-SECTION SETTLE GUARANTEE (single shared rule)
+   ---------------------------------------------------------------
+   Every page's top/hero/intro band is covered by ONE rule set so a
+   faded/blurred/washed heading can never reproduce on any route.
+   These are additive terminal-state guarantees: entrance animations
+   (Reveal / motion-*) still run, but the END state is always crisp,
+   fully opaque, unblurred, non-transformed text — reading > movement.
+
+   Also hardens light-theme contrast for the shared page-header and
+   hero copy so headings/promo/eyebrows never fall below readable
+   alpha on the pale background.
+   ============================================================ */
+
+/* 1) Terminal frame — anything that finished animating keeps full
+      opacity, zero blur/filter, zero residual transform. Belt-and-
+      braces: even if a transition gets interrupted mid-flip, the
+      element cannot rest below this state. */
+.motion-reveal-visible,
+.motion-rise-visible {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+/* 2) Page top: always fully painted once shown — never stuck faded.
+      Wraps hero, page-header and section-intro so ALL routes get the
+      same "loud on top" guarantee without per-file edits (global
+      root cause, not per-page patches). */
+.page-header-content,
+.page-header-content *,
+.hero-copy,
+.hero-copy *,
+.section-intro,
+.section-intro * {
+  opacity: inherit;
+}
+
+/* 3) Light-theme readability for the shared page-header/hero text —
+      the exact tokens the parser flagged as washed. Keep the body a
+      strong dark gray, heading near-black navy, accent strong blue.
+      Only active in light mode via the media query below. */
+@media (prefers-color-scheme: light) {
+  .page-header-content .eyebrow,
+  .hero-copy .eyebrow,
+  .section-intro .eyebrow {
+    color: #1e3fae;
+  }
+  .page-header-content h1,
+  .page-header-content h2,
+  .hero-copy h1,
+  .hero-copy h2,
+  .section-intro h1,
+  .section-intro h2 {
+    color: #0f172a;
+  }
+  .page-header-content p,
+  .hero-copy p,
+  .section-intro p {
+    color: #475569;
+  }
+  .page-header-content .text-gradient,
+  .hero-copy .text-gradient,
+  .section-intro .text-gradient {
+    background-image: linear-gradient(100deg, #3322dd, #0088ff 55%, #22d3ee);
+  }
+}
+
+/* 4) Loose anti-wash for decorative layers that every top band uses —
+      keep gradient/glow/veil translucent layers BEHIND the text. */
+.page-header,
+.page-hero,
+.section-intro {
+  position: relative;
+  isolation: isolate;
+}
+.page-header .aurora,
+.page-header .network,
+.page-header > :first-child:not(h1, .container),
+.page-hero .aurora,
+.page-hero .network {
+  pointer-events: none;
+}
