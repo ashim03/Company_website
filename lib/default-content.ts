@@ -17,9 +17,9 @@ import type { Prisma } from "@prisma/client";
 export const defaultSiteSettings = {
   companyName: "CodAstraLabs",
   legalName: "CodAstra Labs Pvt. Ltd.",
-  tagline: "Software products with operational depth.",
+  tagline: "Digital work that is clear, useful, and built to last.",
   description:
-    "CodAstraLabs builds focused business software for teams that need role-based portals, reliable workflows, clean automation, and scalable product ecosystems.",
+    "CodAstra Labs helps businesses move forward with thoughtful strategy, strong design, dependable software, and practical training.",
   logo: "/codastralabs-logo.jpeg",
   darkLogo: "/codastralabs-logo.jpeg",
   favicon: "/codastralabs-logo.jpeg",
@@ -529,11 +529,11 @@ export const defaultWhy = {
 
 export const defaultHero = {
   eyebrow: "CodAstra Labs",
-  title: "Digital Solutions. Creative Services. Professional Training.",
+  title: "Build digital work people can rely on.",
   description:
-    "Helping businesses, organizations, and individuals grow through digital marketing, creative design, technology solutions, social media management, and practical professional training.",
-  primaryCta: { label: "Explore Our Services", href: "#services" },
-  secondaryCta: { label: "Explore Classes", href: "/classes" },
+    "Strategy, design, software, and training for teams that want clearer decisions, better experiences, and work that keeps delivering after launch.",
+  primaryCta: { label: "Explore Our Services", href: "/services" },
+  secondaryCta: { label: "Start a Conversation", href: "/contact" },
   image: "",
   stats: [] as { label: string; value: string }[],
 };
