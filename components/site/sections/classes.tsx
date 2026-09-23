@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, GraduationCap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Inner, text, asRecord, stringArray } from "@/lib/types";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
@@ -61,9 +61,6 @@ export function ClassesSection({ content }: { content: Inner }) {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <div className="flex size-14 items-center justify-center rounded-2xl gradient-border bg-card text-primary">
-                  <GraduationCap className="size-7" />
-                </div>
                 <LearningJourney className="w-full rounded-2xl border border-border/60 bg-card/60 p-5 sm:p-6" />
                 <ul className="flex flex-wrap gap-2.5">
                   {points.map((point) => (

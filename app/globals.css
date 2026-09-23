@@ -693,3 +693,39 @@ footer button {
     transition: color 0.2s ease !important;
   }
 }
+
+/* ————— FINAL BLUR AUDIT: every surface heading a single flat run,
+   forcibly opaque-black glyphs. Beats any token cascade. ————— */
+html:not(.dark) .page-header-content h1,
+html:not(.dark) .page-header-content h2,
+html:not(.dark) .page-header-content h3,
+html:not(.dark) .hero-copy h1,
+html:not(.dark) .hero-copy h2,
+html:not(.dark) .section-intro h1,
+html:not(.dark) .section-intro h2,
+html:not(.dark) .section-intro h3,
+html:not(.dark) #classes h2,
+html:not(.dark) #products h2,
+html:not(.dark) #cta h3,
+html:not(.dark) .eyebrow {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+}
+html.dark .page-header-content h1,
+html.dark .page-header-content h2,
+html.dark .page-header-content h3,
+html.dark .hero-copy h1,
+html.dark .hero-copy h2,
+html.dark .section-intro h1,
+html.dark .section-intro h2,
+html.dark .section-intro h3,
+html.dark #classes h2,
+html.dark #products h2,
+html.dark #cta h3 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+}

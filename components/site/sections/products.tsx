@@ -32,7 +32,7 @@ export async function ProductsSection({ content }: { content: Inner }) {
           ) : (
             <span className="eyebrow">Products</span>
           )}
-          <h2 className="text-balance text-title font-bold text-foreground">
+          <h2 className="text-balance text-title font-bold text-black dark:text-white">
             {c.title ? text(c.title) : "Software products for real operations"}
           </h2>
           {c.description ? (

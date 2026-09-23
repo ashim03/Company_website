@@ -1,0 +1,37 @@
+.network { position: relative; isolation: isolate; overflow: hidden; padding: 30px; border: 1px solid var(--border); border-radius: 24px; background: radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%), var(--card); }
+.network::before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 36px 36px; }
+.header { text-align: center; }
+.eyebrow { font: 600 10px var(--font-mono); letter-spacing: .16em; color: var(--primary); }
+.header h2 { margin-top: 10px; font-size: clamp(18px, 2vw, 25px); line-height: 1.4; font-weight: 600; letter-spacing: -.02em; color: var(--foreground); text-wrap: balance; }
+.journey { position: relative; margin: 30px 0; }
+.stages { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; padding: 0; margin: 0; list-style: none; }
+.track { position: absolute; top: 70px; left: 8%; right: 8%; height: 1px; border-top: 1px dashed color-mix(in srgb, var(--primary) 40%, transparent); }
+.track i { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 15%, transparent); animation: travel 10s ease-in-out infinite; }
+.stage { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; padding: 22px 10px 16px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); box-shadow: var(--shadow-card); text-align: center; animation: highlight 10s ease-in-out var(--stage-delay) infinite; }
+.team { background: color-mix(in srgb, var(--primary) 7%, var(--card)); }
+.number { position: absolute; top: 9px; left: 12px; font: 500 9px var(--font-mono); color: var(--muted-foreground); }
+.symbol { display: grid; place-items: center; width: 68px; height: 58px; color: var(--primary); background: var(--secondary); border-radius: 18px; margin: 8px 0 17px; }
+.symbol > svg { animation: lift 10s ease-in-out var(--stage-delay) infinite; }
+.copy h3 { color: var(--foreground); font-size: 14px; font-weight: 600; letter-spacing: -.025em; }
+.copy p { color: var(--muted-foreground); font-size: 11px; line-height: 1.5; margin: 6px 0 18px; min-height: 33px; }
+.tag { margin-top: auto; color: var(--primary); font-size: 9px; line-height: 1.4; }
+.next { position: absolute; right: -18px; top: 63px; color: var(--primary); }
+.footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted-foreground); }
+.call, .caption { display: flex; gap: 8px; align-items: center; }.call svg { color: var(--primary); }.caption { font-size: 10px; }
+@keyframes highlight { 0%, 16% { border-color: var(--primary); box-shadow: 0 5px 22px -10px color-mix(in srgb, var(--primary) 40%, transparent); translate: 0 -4px; } 20%, 96% { border-color: var(--border); box-shadow: var(--shadow-card); translate: 0 0; } }
+@keyframes lift { 0%, 16% { transform: translateY(-2px) rotate(-6deg); } 20%, 96% { transform: none; } }
+@keyframes travel { 0%, 16% { left: 0; } 20%, 36% { left: 25%; } 40%, 56% { left: 50%; } 60%, 76% { left: 75%; } 80%, 96% { left: 100%; } 100% { left: 0; } }
+@media (max-width: 900px) {
+  .network { padding: 24px; }.stages { gap: 14px; }.next { right: -14px; width: 11px; }.copy h3 { font-size: 12px; }.tag { font-size: 8px; }
+}
+@media (max-width: 680px) {
+  .network { padding: 22px 18px; border-radius: 18px; }.eyebrow { font-size: 8px; letter-spacing: .1em; }
+  .stages { grid-template-columns: 1fr; gap: 18px; }.journey { margin: 24px 0; }
+  .stage { flex-direction: row; text-align: left; gap: 14px; padding: 14px; min-height: 96px; }
+  .symbol { width: 62px; height: 58px; flex-shrink: 0; margin: 0; }.copy h3 { font-size: 14px; }.copy p { font-size: 11px; min-height: 0; margin: 5px 0 0; }
+  .tag { display: none; }.number { left: auto; right: 8px; top: 6px; font-size: 8px; }.next { top: auto; bottom: -16px; left: 38px; right: auto; rotate: 90deg; }
+  .track { left: 45px; top: 40px; bottom: 40px; right: auto; width: 1px; height: auto; border-top: 0; border-left: 1px dashed color-mix(in srgb, var(--primary) 40%, transparent); }
+  .track i { left: -4px; top: 0; animation-name: travelVertical; }.footer { justify-content: center; }.caption { display: none; }
+}
+@keyframes travelVertical { 0%, 16% { top: 0; } 20%, 36% { top: 25%; } 40%, 56% { top: 50%; } 60%, 76% { top: 75%; } 80%, 96% { top: 100%; } 100% { top: 0; } }
+@media (prefers-reduced-motion: reduce) { .network * { animation: none !important; }.track i { display: none; } }

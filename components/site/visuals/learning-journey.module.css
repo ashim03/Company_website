@@ -1,0 +1,30 @@
+.journey { position: relative; isolation: isolate; overflow: hidden; background: var(--card); }
+.journey::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 65%); }
+.heading { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.cap { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--secondary); color: var(--primary); }
+.eyebrow { font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em; color: var(--primary); font-weight: 600; }
+.heading p { font-size: 14px; font-weight: 600; color: var(--foreground); margin-top: 3px; }
+.arrow { margin-left: auto; color: var(--primary); }
+.path { position: relative; }
+.spine { position: absolute; left: 34px; top: 35px; bottom: 35px; width: 2px; background: var(--border); }
+.spine i { position: absolute; left: -3px; top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 12%, transparent); animation: travel 8s ease-in-out infinite; }
+.steps { display: grid; gap: 12px; list-style: none; padding: 0; margin: 0; }
+.step { position: relative; display: flex; align-items: center; gap: 14px; min-height: 70px; padding: 10px; border: 1px solid transparent; border-radius: 14px; animation: highlight 8s ease-in-out var(--step-delay) infinite; }
+.icon { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); color: var(--primary); box-shadow: var(--shadow-card); animation: iconHighlight 8s ease-in-out var(--step-delay) infinite; }
+.icon svg { animation: lift 8s ease-in-out var(--step-delay) infinite; }
+.copy { min-width: 0; }
+.title { display: flex; align-items: baseline; gap: 8px; }
+.title > span { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--primary); }
+.title h3 { font-size: 16px; font-weight: 600; color: var(--foreground); }
+.copy p { margin-top: 3px; font-size: 11px; color: var(--muted-foreground); }
+.note { margin-left: auto; display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--primary); white-space: nowrap; }
+.footer { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; border-top: 1px solid var(--border); padding-top: 18px; margin-top: 20px; }
+.footer > span { color: var(--muted-foreground); font-size: 10px; }.footer > svg { color: var(--primary); margin-left: auto; }
+.segments { display: flex; gap: 4px; }.segments i { width: 16px; height: 4px; border-radius: 4px; background: var(--border); animation: segment 8s ease-in-out var(--step-delay) infinite; }
+@keyframes highlight { 0%, 21% { background: color-mix(in srgb, var(--primary) 7%, transparent); border-color: color-mix(in srgb, var(--primary) 25%, transparent); } 25%, 96% { background: transparent; border-color: transparent; } }
+@keyframes iconHighlight { 0%, 21% { border-color: var(--primary); background: var(--secondary); } 25%, 96% { border-color: var(--border); background: var(--card); } }
+@keyframes lift { 0%, 21% { transform: translateY(-2px) rotate(-6deg); } 25%, 96% { transform: none; } }
+@keyframes segment { 0%, 21% { background: var(--primary); } 25%, 96% { background: var(--border); } }
+@keyframes travel { 0%, 18% { top: 0; } 25%, 43% { top: 33.333%; } 50%, 68% { top: 66.666%; } 75%, 96% { top: 100%; } 100% { top: 0; } }
+@media (max-width: 420px) { .note { display: none; }.step { gap: 10px; }.eyebrow { font-size: 8px; letter-spacing: .06em; }.heading { gap: 9px; }.heading p { font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { .journey *, .journey *::before { animation: none !important; }.spine i { display: none; }.segments i { background: var(--primary); } }

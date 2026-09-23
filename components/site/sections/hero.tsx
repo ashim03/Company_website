@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Inner, text, asRecord } from "@/lib/types";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
 import { RevealText } from "@/components/site/reveal-text";
 import { Counter } from "@/components/site/counter";
 import { CodeTerminal } from "@/components/site/code-terminal";
-import { AnimatedVisual } from "@/components/site/animated-visual";
+import { CompanyStudio } from "@/components/site/visuals/company-studio";
 import { getProducts } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
@@ -133,16 +133,11 @@ export async function HeroSection({ content, compact = false }: { content: Inner
             ) : null}
           </div>
 
-          <Reveal rise delay={160} initialVisible className="min-w-0 lg:justify-self-end">
+          <Reveal rise delay={160} initialVisible className="w-full min-w-0">
             {image ? (
               <div className="relative">
-                <AnimatedVisual
-                  icon={<Sparkles className="size-6" />}
-                  label={c.imageAlt ? text(c.imageAlt) : "codastra · build, design, learn"}
-                  seed={1}
-                  className="aspect-[4/5] w-full sm:aspect-square lg:aspect-[4/5]"
-                />
-                <div className="animate-bob absolute -bottom-5 -right-5">
+                <CompanyStudio />
+                <div className="animate-bob absolute -bottom-5 right-3">
                   <div className="gradient-border flex items-center gap-2 rounded-xl bg-background/90 px-4 py-3 shadow-soft">
                     <span className="relative flex size-2">
                       <span className="animate-ping-ring absolute inline-flex size-full rounded-full bg-primary" />

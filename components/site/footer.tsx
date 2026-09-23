@@ -135,7 +135,7 @@ export async function Footer() {
         <Container className="flex flex-col items-start justify-between gap-3 py-6 text-sm text-muted-foreground md:flex-row md:items-center">
           <p>{settings.footer.copyright}</p>
           <p className="font-mono text-xs text-muted-foreground">
-            {"// software, design & operations — Nepal & worldwide"}
+            {"// Designed by humans. Built with AI."}
           </p>
         </Container>
       </div>

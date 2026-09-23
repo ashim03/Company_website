@@ -1,0 +1,66 @@
+.studio {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--primary) 13%, transparent), transparent 65%), var(--card);
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+}
+.grid { position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 28px 28px; }
+.topline, .bottomline { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted-foreground); font-size: 10px; }
+.topline { font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; padding-bottom: 25px; }
+.topline span, .bottomline span { display: flex; align-items: center; gap: 6px; }
+.topline i { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+.bottomline { padding-top: 24px; border-top: 1px solid var(--border); margin-top: 24px; }
+.connections { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; fill: none; stroke: var(--primary); stroke-opacity: .16; stroke-width: 1; }
+.signal { stroke-dasharray: 5 16; stroke-opacity: .7; animation: flow 12s linear infinite; }
+.cards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 18px; align-items: center; }
+.card { position: relative; min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); box-shadow: var(--shadow-card); }
+.design { transform: rotate(-3deg); animation: float 7s ease-in-out infinite; }
+.develop { transform: rotate(3deg); animation: float 8s ease-in-out -3s infinite; }
+.learn { animation: float 9s ease-in-out -2s infinite; }
+.launch { animation: float 8s ease-in-out -4s infinite; }
+.cardTitle { display: flex; align-items: center; gap: 7px; color: var(--foreground); font-size: 12px; font-weight: 600; }
+.cardTitle svg { color: var(--primary); }
+.number { margin-left: auto; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 9px; }
+.designPreview { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 26px 26px; gap: 5px; margin: 17px 0 12px; }
+.designPreview span { border-radius: 5px; background: #6961ef; }
+.designPreview span:first-child { grid-row: span 2; background: linear-gradient(135deg, #244be8, #a78bfa); border-radius: 5px 24px 5px 5px; }
+.designPreview span:last-child { background: #38bdf8; border-radius: 16px 5px 5px 5px; }
+.swatches { display: flex; align-items: center; gap: 3px; }
+.swatches i { width: 9px; height: 9px; border-radius: 50%; background: #244be8; }
+.swatches i:nth-child(2) { background: #7665e9; }.swatches i:nth-child(3) { background: #38bdf8; }.swatches i:nth-child(4) { background: #b9d9ff; }
+.swatches span { margin-left: auto; font-size: 7px; color: var(--muted-foreground); }
+.code { display: flex; flex-direction: column; gap: 4px; margin: 16px 0 12px; font-family: var(--font-mono); font-size: 9px; color: var(--primary); }
+.code b { display: inline-block; width: 5px; height: 10px; background: var(--primary); vertical-align: middle; margin-left: 4px; animation: cursor 1.4s steps(2) infinite; }
+.status { display: flex; gap: 4px; align-items: center; font-size: 8px; color: var(--muted-foreground); }
+.status svg { color: var(--success); }
+.center { grid-column: 1 / -1; position: relative; display: grid; place-items: center; height: 192px; }
+.orbit, .innerOrbit { position: absolute; width: 160px; height: 160px; border: 1px solid color-mix(in srgb, var(--primary) 24%, transparent); border-radius: 50%; }
+.orbit { animation: orbit 24s linear infinite; }
+.orbit i { position: absolute; top: 15px; left: 23px; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 40%, transparent); }
+.innerOrbit { width: 130px; height: 130px; border-style: dashed; }
+.identity { position: relative; background: var(--card); padding: 9px; border-radius: 50%; }
+.centerLabel { position: absolute; bottom: 1px; font-family: var(--font-mono); font-size: 8px; letter-spacing: .14em; color: var(--muted-foreground); }
+.lesson { display: flex; flex-direction: column; gap: 5px; margin-top: 18px; font-size: 12px; font-weight: 600; }.lesson span:last-child { font-size: 9px; font-weight: 400; color: var(--muted-foreground); }
+.progress { height: 5px; border-radius: 9px; overflow: hidden; background: var(--secondary); margin-top: 18px; }.progress i { display: block; height: 100%; width: 100%; transform-origin: left; background: linear-gradient(90deg, #244be8, #38bdf8); animation: progress 6s ease-in-out infinite; }
+.steps { display: flex; justify-content: space-between; margin-top: 8px; font-size: 8px; color: var(--muted-foreground); }
+.chart { height: 68px; display: flex; align-items: flex-end; gap: 6px; margin: 17px 0 10px; }.chart i { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(0deg, #244be8, #38bdf8); transform-origin: bottom; animation: bars 4s ease-in-out infinite alternate; }
+.caption { font-size: 9px; color: var(--muted-foreground); }
+@keyframes flow { to { stroke-dashoffset: -252; } }
+@keyframes float { 50% { translate: 0 -5px; } }
+@keyframes orbit { to { rotate: 360deg; } }
+@keyframes bars { from { scale: 1 .65; } to { scale: 1 1; } }
+@keyframes progress { 0%, 100% { scale: .3 1; } 65%, 85% { scale: 1 1; } }
+@keyframes cursor { 50% { opacity: 0; } }
+@media (max-width: 420px) {
+  .studio { padding: 16px; border-radius: 18px; }
+  .cards { column-gap: 10px; }.card { padding: 11px; }
+  .topline { font-size: 7px; }.code { font-size: 7px; }
+  .swatches span { display: none; }.center { height: 180px; }
+  .cardTitle { font-size: 11px; }.lesson { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .studio * { animation: none !important; } }

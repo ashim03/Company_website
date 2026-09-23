@@ -115,12 +115,6 @@ export function EcosystemScene({
         {/* Center identity node */}
         <div className="brand-center absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2">
           <BrandMark className="mx-auto w-24 sm:w-28" />
-          <div className="absolute left-1/2 top-full mt-2 w-44 -translate-x-1/2 text-center">
-            <span className="text-primary font-semibold tracking-tight">CodAstra Labs</span>
-            <div className="mt-0.5 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-muted-foreground">
-              build · design · learn
-            </div>
-          </div>
         </div>
 
         {/* Service pillars */}
