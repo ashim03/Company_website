@@ -618,70 +618,11 @@ export const defaultFaqs: Prisma.FaqUncheckedCreateInput[] = [
   },
 ];
 
-export const defaultTeamMembers: Prisma.TeamMemberUncheckedCreateInput[] = [
-  {
-    name: "Arun Shrestha",
-    role: "Founder & Lead Engineer",
-    bio: "Builds the systems and sets the engineering standard — auth, workflows, and the infrastructure that keeps products running.",
-    email: "support.codastralabs@gmail.com",
-    sortOrder: 1,
-    isVisible: true,
-  },
-  {
-    name: "Priya Maharjan",
-    role: "Product Designer",
-    bio: "Turns real workflows into interfaces that are obvious to use — screens, flows, and feedback loops grounded in actual tasks.",
-    sortOrder: 2,
-    isVisible: true,
-  },
-  {
-    name: "Rahul Karki",
-    role: "Senior Software Engineer",
-    bio: "Ships portals, dashboards, and automation — with a focus on role-based access and clean, maintainable code.",
-    sortOrder: 3,
-    isVisible: true,
-  },
-  {
-    name: "Sita Poudel",
-    role: "Project Manager",
-    bio: "Keeps scope clear and communication honest — roadmaps, progress, and launches that land when they should.",
-    sortOrder: 4,
-    isVisible: true,
-  },
-];
+// Keep the public site free of invented people until the team is entered in CMS.
+export const defaultTeamMembers: Prisma.TeamMemberUncheckedCreateInput[] = [];
 
-export const defaultTestimonials: Prisma.TestimonialUncheckedCreateInput[] = [
-  {
-    quote:
-      "BridgeLabs replaced the spreadsheets and chat we were running on. Leads, students, visas, and invoices now live in one system our whole team can see.",
-    author: "Operations Lead",
-    role: "Education Consultancy",
-    company: "BridgeLabs client",
-    sortOrder: 1,
-    isVisible: true,
-    source: "bridgelabs",
-  },
-  {
-    quote:
-      "Requests and follow-ups that used to fall between staff members now route through one accountable workflow. Nothing gets lost.",
-    author: "Founder",
-    role: "Founder",
-    company: "Consultancy client",
-    sortOrder: 2,
-    isVisible: true,
-    source: "aic-international-group-consultancy",
-  },
-  {
-    quote:
-      "Dine-in orders, kitchen tickets, stock, and billing finally talk to each other. The team adapted to it quickly because it matches how we actually run service.",
-    author: "Owner",
-    role: "Owner",
-    company: "RE Vibes Cafe & Restro",
-    sortOrder: 3,
-    isVisible: true,
-    source: "platterlabs",
-  },
-];
+// Testimonials are deliberately empty until verified client quotes are added.
+export const defaultTestimonials: Prisma.TestimonialUncheckedCreateInput[] = [];
 
 export const defaultProjects: Prisma.ProjectUncheckedCreateInput[] = [
   {
@@ -912,51 +853,17 @@ If a feature does not survive contact with a real workflow, it does not belong i
   },
 ];
 
-export const defaultClients: Prisma.ClientUncheckedCreateInput[] = [
-  {
-    name: "Sharpline Construction",
-    logo: "https://res.cloudinary.com/dgd8t6pts/image/upload/v1/crm-consultancy/website-cms/1784114721033-ddcx31-logo-1?_a=BAMAOGiu0",
-    website: "https://buildwithsharpline.com/",
-    industry: "Construction",
-    sortOrder: 1,
-    featured: true,
-    isVisible: true,
-  },
-  {
-    name: "Byaparihub",
-    logo: "https://res.cloudinary.com/dgd8t6pts/image/upload/v1/crm-consultancy/website-cms/1784114765276-51rei2-uip?_a=BAMAOGiu0",
-    website: "https://www.byaparihub.com/",
-    industry: "Commerce",
-    sortOrder: 2,
-    featured: false,
-    isVisible: true,
-  },
-  {
-    name: "RE Vibes Cafe & Restro",
-    logo: "https://res.cloudinary.com/dgd8t6pts/image/upload/v1/crm-consultancy/website-cms/1784114809136-7xmay9-whatsapp-image-2026-07-14-at-7-39-42-pm?_a=BAMAOGiu0",
-    website: "",
-    industry: "Food & beverage",
-    sortOrder: 3,
-    featured: false,
-    isVisible: true,
-  },
-  {
-    name: "AIC International Pvt. Ltd.",
-    logo: "https://res.cloudinary.com/dgd8t6pts/image/upload/v1/crm-consultancy/website-cms/1789323897231-7wyp52-635140093-1374260888047078-7828488237314938565-n?_a=BAMAOGkS0",
-    website: "https://www.aicintlgroup.com/",
-    industry: "Education consultancy",
-    sortOrder: 4,
-    featured: false,
-    isVisible: true,
-  },
-];
+// Client logos are entered through the CMS after consent is confirmed.
+export const defaultClients: Prisma.ClientUncheckedCreateInput[] = [];
 
 export const defaultNav = [
-  { label: "Services", url: "/services", sortOrder: 1 },
-  { label: "Products", url: "/products", sortOrder: 2 },
-  { label: "Classes", url: "/classes", sortOrder: 3 },
-  { label: "Company", url: "/company", sortOrder: 4 },
-  { label: "Contact", url: "/contact", sortOrder: 5 },
+  { label: "Home", url: "/", sortOrder: 1 },
+  { label: "Services", url: "/services", sortOrder: 2 },
+  { label: "Products", url: "/products", sortOrder: 3 },
+  { label: "Classes", url: "/classes", sortOrder: 4 },
+  { label: "Company", url: "/company", sortOrder: 5 },
+  { label: "Work", url: "/work", sortOrder: 6 },
+  { label: "Contact", url: "/contact", sortOrder: 7 },
 ];
 
 export const defaultFooterLinks = {
@@ -1097,9 +1004,9 @@ export function defaultHomeSections(): {
       sortOrder: 3,
       content: {
         eyebrow: "About us",
-        title: "Digital solutions, creative services, and professional training.",
+        title: "A practical partner for the work behind growth.",
         description:
-          "CodAstra Labs helps businesses, organizations, and individuals grow through digital marketing, creative design, technology solutions, social media management, and practical professional training.",
+          "We bring strategy, design, software, and training into one accountable team so your next step is clear and useful from day one.",
         image:
           "https://images.pexels.com/photos/16323454/pexels-photo-16323454.jpeg?auto=compress&cs=tinysrgb&w=1600",
         imageAlt:
@@ -1118,16 +1025,40 @@ export function defaultHomeSections(): {
       sortOrder: 4,
       content: {
         eyebrow: "What we do",
-        title: "Digital solutions, creative services, and professional training.",
+        title: "Everything your next release needs.",
         description:
-          "Six service pillars covering everything your brand needs to grow — from marketing and design to software, IT, and hands-on classes.",
+          "Choose the right starting point, then keep the same team through strategy, design, build, launch, and support.",
+      },
+    },
+    {
+      sectionType: "products",
+      title: "Products built for real operations",
+      subtitle: "Tools we build and run.",
+      sortOrder: 5,
+      content: {
+        eyebrow: "Our products",
+        title: "Software that keeps the work moving.",
+        description:
+          "Focused systems for teams that need fewer hand-offs, clearer ownership, and reliable day-to-day operations.",
+      },
+    },
+    {
+      sectionType: "process",
+      title: "How we work",
+      subtitle: "A clear path from brief to launch.",
+      sortOrder: 6,
+      content: {
+        eyebrow: "Our process",
+        title: "Small steps, visible progress.",
+        description:
+          "We start with the real workflow, make the decisions visible, and ship in useful increments so you always know what happens next.",
       },
     },
     {
       sectionType: "classes",
       title: "Learn. Build. Grow.",
       subtitle: "Professional classes and training.",
-      sortOrder: 8,
+      sortOrder: 7,
       content: {
         eyebrow: "Professional classes",
         title: "Learn. Build. Grow.",
@@ -1150,7 +1081,7 @@ export function defaultHomeSections(): {
       sectionType: "why",
       title: "Why CodAstra",
       subtitle: "Reasons to work with us.",
-      sortOrder: 9,
+      sortOrder: 8,
       content: {
         eyebrow: "Why CodAstra Labs",
         title: "One partner for your digital growth.",
@@ -1184,7 +1115,7 @@ export function defaultHomeSections(): {
       sectionType: "projects",
       title: "Selected work",
       subtitle: "Projects we've shipped.",
-      sortOrder: 11,
+      sortOrder: 9,
       content: {
         eyebrow: "Selected work",
         title: "From problem to deployed product.",
@@ -1196,7 +1127,7 @@ export function defaultHomeSections(): {
       sectionType: "testimonials",
       title: "What clients say",
       subtitle: "In their words.",
-      sortOrder: 12,
+      sortOrder: 10,
       content: {
         eyebrow: "In their words",
         title: "What teams say about working with us.",
@@ -1208,7 +1139,7 @@ export function defaultHomeSections(): {
       sectionType: "blog",
       title: "From the blog",
       subtitle: "Latest insights.",
-      sortOrder: 13,
+      sortOrder: 11,
       content: {
         eyebrow: "From the blog",
         title: "Notes on building software that ships.",
@@ -1220,7 +1151,7 @@ export function defaultHomeSections(): {
       sectionType: "cta",
       title: "Let's talk",
       subtitle: "Start a conversation.",
-      sortOrder: 10,
+      sortOrder: 12,
       content: {
         eyebrow: "Ready when you are",
         title: "Let's build your digital growth.",

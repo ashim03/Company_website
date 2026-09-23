@@ -102,13 +102,17 @@ function seedToSafeCourse(input: (typeof defaultCourses)[number]): SafeCourse {
 // ------------------------------------------------------------------
 
 export const getNavTree = cache(async (): Promise<NavNode[]> => {
-  const fallback: NavNode[] = defaultServices.map((s, i) => ({
-    id: `fallback-service-${i}`,
-    label: s.name,
-    url: `/services/${s.slug}`,
-    isExternal: false,
-    children: [],
-  }));
+  // Navigation is a page map. Falling back to service records here made a
+  // database hiccup turn the primary nav into a list of service detail links.
+  const fallback: NavNode[] = [
+    { id: "fallback-home", label: "Home", url: "/", isExternal: false, children: [] },
+    { id: "fallback-services", label: "Services", url: "/services", isExternal: false, children: [] },
+    { id: "fallback-products", label: "Products", url: "/products", isExternal: false, children: [] },
+    { id: "fallback-classes", label: "Classes", url: "/classes", isExternal: false, children: [] },
+    { id: "fallback-company", label: "Company", url: "/company", isExternal: false, children: [] },
+    { id: "fallback-work", label: "Work", url: "/work", isExternal: false, children: [] },
+    { id: "fallback-contact", label: "Contact", url: "/contact", isExternal: false, children: [] },
+  ];
 
   const items = await safely<NavNode[]>(fallback, async () => {
     const rows = await prisma.navigationItem.findMany({
