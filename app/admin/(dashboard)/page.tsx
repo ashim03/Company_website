@@ -37,7 +37,7 @@ export default async function AdminDashboardPage() {
   const { counts, recentEnquiries, recentEnrollments } = await getDashboardData();
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-7xl">
       <AdminPageHeader
         title="Dashboard"
         description="Everything your visitors see is managed from here."
@@ -70,7 +70,7 @@ export default async function AdminDashboardPage() {
           <Link
             key={card.key}
             href={card.href}
-            className="group rounded-lg border bg-card p-4 transition-colors hover:border-primary/50"
+            className="group rounded-xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md"
           >
             <div className="flex items-center justify-between">
               <card.icon className="size-5 text-muted-foreground" />

@@ -1004,17 +1004,17 @@ export function defaultHomeSections(): {
       sortOrder: 3,
       content: {
         eyebrow: "About us",
-        title: "A practical partner for the work behind growth.",
+        title: "We make digital work easier to run.",
         description:
-          "We bring strategy, design, software, and training into one accountable team so your next step is clear and useful from day one.",
+          "CodAstra Labs is a small, hands-on team from Nepal. We stay close to the real workflow, explain the trade-offs, and keep ownership clear from the first conversation to the finished result.",
         image:
           "https://images.pexels.com/photos/16323454/pexels-photo-16323454.jpeg?auto=compress&cs=tinysrgb&w=1600",
         imageAlt:
           "Young professionals collaborating in a modern coworking space in Kathmandu, Nepal",
         points: [
-          "One partner for marketing, design, technology, and training",
-          "Practical work and professional classes — hands-on from day one",
-          "Support from strategy and design through launch and beyond",
+          "Clear decisions instead of layers of hand-offs",
+          "Working software and useful creative, delivered in small steps",
+          "A team that stays involved after launch",
         ],
       },
     },
@@ -1025,9 +1025,9 @@ export function defaultHomeSections(): {
       sortOrder: 4,
       content: {
         eyebrow: "What we do",
-        title: "Everything your next release needs.",
+        title: "Services shaped around outcomes.",
         description:
-          "Choose the right starting point, then keep the same team through strategy, design, build, launch, and support.",
+          "Choose the problem you need to solve: reach the right audience, sharpen the brand, ship better software, or build the skills to keep improving in-house.",
       },
     },
     {

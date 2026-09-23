@@ -16,7 +16,7 @@ export function AdminPageHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("mb-6 space-y-3", className)}>
+    <div className={cn("mb-8 space-y-3", className)}>
       {back ? (
         <Link
           href={back.href}
@@ -28,7 +28,7 @@ export function AdminPageHeader({
       ) : null}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h1>
           {description ? (
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{description}</p>
           ) : null}

@@ -52,25 +52,26 @@ export function Sidebar() {
     exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <aside className="hidden w-60 shrink-0 flex-col border-r bg-card/40 lg:flex">
-      <div className="flex h-14 items-center gap-2 border-b px-4">
-        <div className="flex size-7 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
-          C
+    <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r bg-card/70 shadow-[8px_0_30px_-26px_rgba(15,23,42,0.5)] lg:flex">
+      <div className="flex h-16 items-center gap-3 border-b px-4">
+        <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-[0_8px_20px_-10px_rgba(37,99,235,0.8)]">
+          CA
         </div>
-        <div className="leading-tight">
-          <p className="text-sm font-semibold">CodAstra CMS</p>
-          <p className="text-[11px] text-muted-foreground">Content management</p>
+        <div className="min-w-0 leading-tight">
+          <p className="truncate text-sm font-semibold">CodAstra CMS</p>
+          <p className="text-[11px] text-muted-foreground">Content workspace</p>
         </div>
       </div>
-      <nav className="flex-1 space-y-0.5 overflow-y-auto p-2">
+      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
+        <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">Content</p>
         {NAV.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
+              "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-accent hover:text-foreground",
               isActive(item.href, item.href === "/admin")
-                ? "bg-accent font-medium text-foreground"
+                ? "bg-primary/10 font-semibold text-primary shadow-sm"
                 : ""
             )}
           >
@@ -79,14 +80,15 @@ export function Sidebar() {
           </Link>
         ))}
       </nav>
-      <div className="space-y-0.5 border-t p-2">
+      <div className="space-y-0.5 border-t px-3 py-4">
+        <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">Workspace</p>
         {SETTINGS_NAV.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
-              isActive(item.href) ? "bg-accent font-medium text-foreground" : ""
+              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-all hover:bg-accent hover:text-foreground",
+              isActive(item.href) ? "bg-primary/10 font-semibold text-primary shadow-sm" : ""
             )}
           >
             <item.icon className="size-4" />

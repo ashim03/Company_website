@@ -40,7 +40,7 @@ export function AdminTable<T extends { id: string }>({
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border bg-card">
+    <div className="overflow-x-auto rounded-xl border bg-card shadow-sm">
       <Table>
         <TableHeader>
           <TableRow>
@@ -52,9 +52,9 @@ export function AdminTable<T extends { id: string }>({
         </TableHeader>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row.id} className="transition-colors hover:bg-muted/40">
               {columns.map((col) => (
-                <TableCell key={col.key}>
+                <TableCell key={col.key} className="whitespace-nowrap">
                   {col.cell ? col.cell(row) : String((row as Record<string, unknown>)[col.key] ?? "")}
                 </TableCell>
               ))}
