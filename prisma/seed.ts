@@ -250,7 +250,7 @@ async function main() {
           content: (s.content ?? {}) as Prisma.InputJsonValue,
           settings: {},
           sortOrder: i + 1,
-          isVisible: s.sectionType !== "team",
+          isVisible: true,
         },
       });
     }

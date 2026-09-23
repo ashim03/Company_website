@@ -109,7 +109,7 @@ export const getNavTree = cache(async (): Promise<NavNode[]> => {
     { id: "fallback-services", label: "Services", url: "/services", isExternal: false, children: [] },
     { id: "fallback-products", label: "Products", url: "/products", isExternal: false, children: [] },
     { id: "fallback-classes", label: "Classes", url: "/classes", isExternal: false, children: [] },
-    { id: "fallback-company", label: "Company", url: "/company", isExternal: false, children: [] },
+    { id: "fallback-company", label: "About Us", url: "/company", isExternal: false, children: [] },
     { id: "fallback-work", label: "Work", url: "/work", isExternal: false, children: [] },
     { id: "fallback-contact", label: "Contact", url: "/contact", isExternal: false, children: [] },
   ];

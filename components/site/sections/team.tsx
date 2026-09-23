@@ -8,7 +8,6 @@ import { SpotlightCard } from "@/components/site/spotlight-card";
 export async function TeamSection({ content }: { content: Inner }) {
   const c = asRecord(content);
   const members = await getTeam();
-  if (!members.length) return null;
 
   return (
     <Section>
@@ -17,7 +16,7 @@ export async function TeamSection({ content }: { content: Inner }) {
         title={c.title ? text(c.title) : "Engineers, designers, and product minds"}
         description={c.description ? text(c.description) : undefined}
       />
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {members.length ? <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {members.slice(0, 8).map((m, i) => (
           <Reveal key={m.id} delay={(i % 4) * 70}>
             <SpotlightCard
@@ -66,7 +65,14 @@ export async function TeamSection({ content }: { content: Inner }) {
             </SpotlightCard>
           </Reveal>
         ))}
-      </div>
+      </div> : (
+        <div className="rounded-2xl border border-dashed border-primary/30 bg-primary/5 p-8 text-center">
+          <p className="text-base font-medium">A focused team is taking shape.</p>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+            We keep the team close to the work. Meet the people behind CodAstra Labs here as each role and profile is ready to share.
+          </p>
+        </div>
+      )}
     </Section>
   );
 }

@@ -858,10 +858,10 @@ export const defaultClients: Prisma.ClientUncheckedCreateInput[] = [];
 
 export const defaultNav = [
   { label: "Home", url: "/", sortOrder: 1 },
-  { label: "Services", url: "/services", sortOrder: 2 },
-  { label: "Products", url: "/products", sortOrder: 3 },
-  { label: "Classes", url: "/classes", sortOrder: 4 },
-  { label: "Company", url: "/company", sortOrder: 5 },
+  { label: "About Us", url: "/company", sortOrder: 2 },
+  { label: "Services", url: "/services", sortOrder: 3 },
+  { label: "Products", url: "/products", sortOrder: 4 },
+  { label: "Classes", url: "/classes", sortOrder: 5 },
   { label: "Work", url: "/work", sortOrder: 6 },
   { label: "Contact", url: "/contact", sortOrder: 7 },
 ];
@@ -1027,7 +1027,7 @@ export function defaultHomeSections(): {
         eyebrow: "What we do",
         title: "Services shaped around outcomes.",
         description:
-          "Choose the problem you need to solve: reach the right audience, sharpen the brand, ship better software, or build the skills to keep improving in-house.",
+          "Choose the problem you need to solve: reach the right audience, sharpen the brand, ship better software, or make daily operations more reliable.",
       },
     },
     {
@@ -1061,18 +1061,18 @@ export function defaultHomeSections(): {
       sortOrder: 7,
       content: {
         eyebrow: "Professional classes",
-        title: "Learn. Build. Grow.",
+        title: "Build skills you can use tomorrow.",
         description:
-          "Build practical, industry-relevant skills through professional classes and hands-on training designed for students, professionals, and aspiring digital creators.",
+          "Short, practical classes for students, professionals, and teams who want to leave with real work—not just another certificate.",
         image:
           "https://images.pexels.com/photos/33845767/pexels-photo-33845767.jpeg?auto=compress&cs=tinysrgb&w=1600",
         imageAlt:
           "Students studying in an MBA classroom at a university in Nepal",
         points: [
-          "IT and digital skills",
-          "Digital marketing",
-          "Graphic design",
-          "Web development",
+          "Learn with current tools",
+          "Practice on guided projects",
+          "Build a portfolio you can show",
+          "Launch with confidence",
         ],
         primaryCta: { label: "Explore Our Classes", href: "/classes" },
       },
