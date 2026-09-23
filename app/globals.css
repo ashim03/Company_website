@@ -3,23 +3,23 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f8fafe;
-  --foreground: #0e1526;
+  --background: #ffffff;
+  --foreground: #080817;
   --card: #ffffff;
-  --card-foreground: #0e1526;
+  --card-foreground: #080817;
   --popover: #ffffff;
-  --popover-foreground: #0e1526;
-  --primary: #2563eb;
+  --popover-foreground: #080817;
+  --primary: #244be8;
   --primary-foreground: #ffffff;
   --secondary: #eef2fb;
-  --secondary-foreground: #263259;
-  --muted: #f1f4fb;
-  --muted-foreground: #45506e;
+  --secondary-foreground: #101025;
+  --muted: #f6f8ff;
+  --muted-foreground: #4f5365;
   --accent: #e6edff;
-  --accent-foreground: #1e3fae;
-  --border: #e3e8f7;
-  --input: #d3dcf2;
-  --ring: #2563eb;
+  --accent-foreground: #244be8;
+  --border: #e7e9f5;
+  --input: #dde1ee;
+  --ring: #244be8;
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
@@ -787,4 +787,38 @@
 .page-hero .aurora,
 .page-hero .network {
   pointer-events: none;
+}
+
+/* Footer — always the premium dark navy gradient regardless of theme
+   (matches the dark brand drop-gradient tail of the logo). All copy
+   inside resolves to light tones so it never disappears on the navy. */
+footer {
+  --foreground: rgb(255 255 255 / 0.97);
+  --muted-foreground: rgb(214 216 230 / 0.84);
+  --primary: #40a0ff;
+  --background: rgb(11 16 45 / 0);
+  color: rgb(214 216 230 / 0.88);
+}
+
+footer a,
+footer .footer-link,
+footer a.text-muted-foreground {
+  color: rgb(202 209 232 / 0.9);
+  transition: color 0.2s ease;
+}
+footer a:hover,
+footer .footer-link:hover {
+  color: var(--primary);
+}
+footer .text-gradient {
+  background-image: linear-gradient(100deg, #60a5fa 0%, #818cf8 50%, #38bdf8 100%);
+}
+footer button {
+  color: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  footer * {
+    animation: none !important;
+    transition: color 0.2s ease !important;
+  }
 }

@@ -32,7 +32,7 @@ export async function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-border/60 bg-background/70 backdrop-blur-xl">
+    <footer className="relative overflow-hidden border-t border-[#21244f] bg-[linear-gradient(135deg,#070B20,#10153D_55%,#2B105B)]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-0"

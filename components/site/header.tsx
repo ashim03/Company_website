@@ -12,7 +12,7 @@ export async function Header() {
   const [nav, settings] = await Promise.all([getNavTree(), getSettings()]);
 
   return (
-    <header className="sticky top-0 z-40 glass border-b border-border/60">
+    <header className="sticky top-0 z-40 border-b border-[#E8EAF4] bg-white/98 shadow-[0_4px_20px_rgba(25,35,100,0.05)] backdrop-blur-sm">
       <Container className="flex h-16 items-center justify-between gap-4">
         <Logo logo={settings.logo} name={settings.companyName} priority />
 
