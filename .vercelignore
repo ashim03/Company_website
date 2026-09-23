@@ -1,0 +1,6 @@
+.env
+.env.*
+.opencode-tmp
+.git
+.next
+node_modules
