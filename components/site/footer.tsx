@@ -121,7 +121,7 @@ export async function Footer() {
           </ul>
           <Link
             href="/contact"
-            className="group mt-5 flex items-center justify-between rounded-xl gradient-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-transform hover:-translate-y-0.5"
+            className="footer-consultation group mt-5 flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-[transform,box-shadow,background] hover:-translate-y-0.5"
           >
             <span>Get a free consultation</span>
             <span className="text-primary transition-transform group-hover:translate-x-0.5">

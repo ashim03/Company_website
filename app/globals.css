@@ -687,6 +687,20 @@ footer .text-gradient {
 footer button {
   color: inherit;
 }
+.footer-consultation {
+  color: #ffffff !important;
+  background: linear-gradient(110deg, #244be8 0%, #3b82f6 52%, #6416d9 100%);
+  border: 1px solid rgb(125 211 252 / 0.45);
+  box-shadow: 0 14px 30px -16px rgb(37 99 235 / 0.9);
+}
+.footer-consultation:hover {
+  color: #ffffff !important;
+  background: linear-gradient(110deg, #3158ed 0%, #4b8df8 52%, #7528e6 100%);
+  box-shadow: 0 18px 36px -14px rgb(56 189 248 / 0.8);
+}
+.footer-consultation .text-primary {
+  color: #ffffff !important;
+}
 @media (prefers-reduced-motion: reduce) {
   footer * {
     animation: none !important;
