@@ -51,7 +51,7 @@ const SECTION_CONTENT_GUIDES: Record<string, string> = {
   promo:
     '{\n  "eyebrow": "…",\n  "title": "…",\n  "description": "…",\n  "icon": "trending-up",\n  "points": ["…", "…"],\n  "primaryCta": { "label": "…", "href": "/services" }\n}\n// Spotlight band: icon keys are the same as services icons.',
   classes:
-    '{\n  "eyebrow": "…",\n  "title": "Learn. Build. Grow.",\n  "description": "…",\n  "points": ["IT and digital skills", "…"],\n  "primaryCta": { "label": "Explore Our Classes", "href": "/services" }\n}',
+    '{\n  "eyebrow": "…",\n  "sectionEyebrow": "Our classes",\n  "sectionTitle": "Practical learning, lasting skills.",\n  "sectionDescription": "Introduce the classes above the learning card.",\n  "title": "Build skills you can use tomorrow.",\n  "description": "…",\n  "points": ["IT and digital skills", "…"],\n  "primaryCta": { "label": "Explore Our Classes", "href": "/classes" }\n}',
   products:
     '{\n  "title": "…",\n  "subtitle": "…",\n  "cta": { "label": "…", "href": "/products" }\n}\n// Cards come from the Products section of the CMS.',
   projects:

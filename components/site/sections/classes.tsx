@@ -4,6 +4,7 @@ import { Inner, text, asRecord, stringArray } from "@/lib/types";
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
 import { LearningJourney } from "@/components/site/visuals/learning-journey";
+import { SectionHeading } from "@/components/site/section";
 
 const DEFAULT_POINTS = [
   "IT and digital skills",
@@ -28,6 +29,12 @@ export function ClassesSection({ content }: { content: Inner }) {
   return (
     <section id="classes" className="py-20 md:py-28">
       <Container>
+        <SectionHeading
+          splitAccent
+          eyebrow={text(c.sectionEyebrow, "Our classes")}
+          title={text(c.sectionTitle, "Practical learning, lasting skills.")}
+          description={text(c.sectionDescription, "Explore classes in digital marketing, graphic design, web development, and IT. Learn through guided exercises and build projects you can share.")}
+        />
         <Reveal>
           <div className="bg-noise relative overflow-hidden rounded-3xl gradient-border bg-card/80 px-6 py-16 shadow-soft sm:px-12 md:px-16">
             <div
@@ -41,9 +48,9 @@ export function ClassesSection({ content }: { content: Inner }) {
             <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="flex flex-col gap-5">
                 <span className="eyebrow">{eyebrow}</span>
-                <h2 className="text-balance text-title font-semibold text-black dark:text-white">
+                <h3 className="text-balance text-title font-semibold text-black dark:text-white">
                   {title}
-                </h2>
+                </h3>
                 <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
                   {description}
                 </p>

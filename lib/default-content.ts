@@ -1061,9 +1061,12 @@ export function defaultHomeSections(): {
       sortOrder: 7,
       content: {
         eyebrow: "Professional classes",
-        title: "Small steps. Real skills.",
+        sectionEyebrow: "Our classes",
+        sectionTitle: "Practical learning, lasting skills.",
+        sectionDescription: "Explore classes in digital marketing, graphic design, web development, and IT. Learn through guided exercises and build projects you can share.",
+        title: "Build skills you can use tomorrow.",
         description:
-          "We start with the foundations, make each step visible, and move from guided practice to a portfolio you can use with confidence.",
+          "Short, practical classes for students, professionals, and teams who want to leave with real work—not just another certificate.",
         image:
           "https://images.pexels.com/photos/33845767/pexels-photo-33845767.jpeg?auto=compress&cs=tinysrgb&w=1600",
         imageAlt:
