@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
 import { revalidateAll } from "@/lib/admin";
@@ -27,6 +28,7 @@ export async function createNavItem(_prev: ActionState, fd: FormData): Promise<A
     data: { ...parsed.data, parentId: parsed.data.parentId || null },
   });
   await revalidateAll();
+  revalidatePath("/", "layout");
   redirect("/admin/navigation");
 }
 
@@ -49,6 +51,7 @@ export async function updateNavItem(id: string, _prev: ActionState, fd: FormData
     data: { ...parsed.data, parentId: parsed.data.parentId || null },
   });
   await revalidateAll();
+  revalidatePath("/", "layout");
   redirect("/admin/navigation");
 }
 
@@ -56,4 +59,5 @@ export async function deleteNavItem(id: string): Promise<void> {
   await guard();
   await prisma.navigationItem.delete({ where: { id } });
   await revalidateAll();
+  revalidatePath("/", "layout");
 }

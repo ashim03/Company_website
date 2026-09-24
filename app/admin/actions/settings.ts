@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
 import { revalidateAll, toJson, formField, formBool, firstIssue } from "@/lib/admin";
@@ -68,5 +69,6 @@ export async function updateSettings(
     update: { value: toJson(parsed.data) },
   });
   await revalidateAll();
+  revalidatePath("/", "layout");
   redirect("/admin/settings?ok=1");
 }
