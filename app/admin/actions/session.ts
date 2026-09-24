@@ -9,11 +9,10 @@ import {
   verifyPassword,
 } from "@/lib/auth";
 import { loginSchema } from "@/lib/validations";
+import { loginRetryAt, LOGIN_FAILURE_LIMIT } from "@/lib/login-cooldown";
+import type { Prisma } from "@prisma/client";
 
-export type LoginState = { error?: string };
-
-const MAX_ATTEMPTS = 8; // per window below
-const LOCK_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+export type LoginState = { error?: string; retryAt?: number };
 
 async function getClientIp(): Promise<string | undefined> {
   const h = await headers();
@@ -24,27 +23,11 @@ async function getClientIp(): Promise<string | undefined> {
   );
 }
 
-async function isLocked(ip?: string, email?: string): Promise<boolean> {
-  if (!ip && !email) return false;
-  const since = new Date(Date.now() - LOCK_WINDOW_MS);
-  const attempts = await prisma.loginAttempt.count({
-    where: {
-      createdAt: { gte: since },
-      OR: [
-        ...(ip ? [{ ip }] : []),
-        ...(email ? [{ email }] : []),
-      ],
-    },
-  });
-  return attempts >= MAX_ATTEMPTS;
-}
-
-async function recordFailure(email: string, ip?: string): Promise<void> {
-  try {
-    await prisma.loginAttempt.create({ data: { email, ip } });
-  } catch {
-    // Do not let a logging failure block the login response.
-  }
+async function retryAt(tx: Prisma.TransactionClient, email: string, ip?: string) {
+  const groups = await Promise.all([{ email }, ...(ip ? [{ ip }] : [])].map(where => tx.loginAttempt.findMany({
+    where, select: { createdAt: true }, orderBy: { createdAt: "desc" }, take: LOGIN_FAILURE_LIMIT,
+  })));
+  return Math.max(0, ...groups.map(failures => loginRetryAt(failures, Date.now()) ?? 0)) || undefined;
 }
 
 export async function login(
@@ -62,27 +45,33 @@ export async function login(
   const ip = await getClientIp();
   const email = parsed.data.email.toLowerCase();
 
-  if (!(await isLocked(ip, email))) {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (user && user.status === "ACTIVE") {
-      const valid = await verifyPassword(parsed.data.password, user.passwordHash);
-      if (valid) {
-        const h = await headers();
-        await createSession(user, {
-          userAgent: h.get("user-agent") ?? undefined,
-          ip: h.get("x-forwarded-for")?.split(",")[0] ?? undefined,
-        });
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { lastLoginAt: new Date() },
-        });
-        redirect("/admin");
+  try {
+    const result = await prisma.$transaction(async tx => {
+      // Serialize attempts across server instances so parallel requests cannot
+      // slip through the fifth-failure boundary. Stable ordering avoids deadlocks.
+      for (const key of [`login:email:${email}`, ...(ip ? [`login:ip:${ip}`] : [])].sort()) {
+        await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtextextended(${key}, 0))::text`;
       }
-    }
+      const blockedUntil = await retryAt(tx, email, ip);
+      if (blockedUntil) return { retryAt: blockedUntil };
+      const user = await tx.user.findUnique({ where: { email } });
+      if (user?.status === "ACTIVE" && await verifyPassword(parsed.data.password, user.passwordHash)) {
+        await tx.loginAttempt.deleteMany({ where: { OR: [{ email }, ...(ip ? [{ ip }] : [])] } });
+        await tx.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
+        return { user };
+      }
+      await tx.loginAttempt.create({ data: { email, ip } });
+      return { retryAt: await retryAt(tx, email, ip) };
+    }, { maxWait: 10_000, timeout: 15_000 });
+    if (!result.user) return result.retryAt
+      ? { error: "Too many failed attempts. Please wait one minute before trying again.", retryAt: result.retryAt }
+      : { error: "Invalid email or password." };
+    const h = await headers();
+    await createSession(result.user, { userAgent: h.get("user-agent") ?? undefined, ip });
+  } catch {
+    return { error: "Sign in is temporarily unavailable. Please try again shortly." };
   }
-
-  await recordFailure(email, ip);
-  return { error: "Invalid email or password." };
+  redirect("/admin");
 }
 
 export async function logout(): Promise<void> {
