@@ -26,9 +26,10 @@ export function NetworkCanvas({ className }: { className?: string }) {
     const el = canvas;
     const ctx = context;
 
-    const ACCENT = [0, 136, 255] as const; // #0088ff
+    let dark = document.documentElement.classList.contains("dark");
+    let ACCENT: readonly [number, number, number] = dark ? [0, 136, 255] : [44, 86, 152];
     const GLOW = [34, 211, 238] as const; // #22d3ee
-    const NODE = [148, 163, 184] as const; // slate-400
+    let NODE: readonly [number, number, number] = dark ? [148, 163, 184] : [62, 89, 130];
     const LINK_RANGE = 150;
     const CURSOR_RANGE = 190;
     const CURSOR_FORCE = 0.018;
@@ -108,7 +109,7 @@ export function NetworkCanvas({ className }: { className?: string }) {
           const dy = a.y - b.y;
           const d2 = dx * dx + dy * dy;
           if (d2 < LINK_RANGE * LINK_RANGE) {
-            wire(a.x, a.y, b.x, b.y, ACCENT, (1 - Math.sqrt(d2) / LINK_RANGE) * 0.32);
+            wire(a.x, a.y, b.x, b.y, ACCENT, (1 - Math.sqrt(d2) / LINK_RANGE) * (dark ? 0.32 : 0.46));
           }
         }
       }
@@ -202,6 +203,7 @@ export function NetworkCanvas({ className }: { className?: string }) {
     }
 
     function applyMotionPreference() {
+      mouse.fine = finePointer.matches;
       if (reduced.matches) {
         stop();
         staticFrame();
@@ -226,9 +228,17 @@ export function NetworkCanvas({ className }: { className?: string }) {
     window.addEventListener("pointerleave", onPointerLeave);
     reduced.addEventListener("change", applyMotionPreference);
     finePointer.addEventListener("change", applyMotionPreference);
+    const themeObserver = new MutationObserver(() => {
+      dark = document.documentElement.classList.contains("dark");
+      ACCENT = dark ? [0, 136, 255] : [44, 86, 152];
+      NODE = dark ? [148, 163, 184] : [62, 89, 130];
+      if (reduced.matches) draw(0);
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     return () => {
       stop();
+      themeObserver.disconnect();
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("pointermove", onPointerMove);

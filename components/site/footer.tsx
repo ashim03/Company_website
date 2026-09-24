@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, MapPin, Globe, Music2, MessageCircle, Code2 } from "lucide-react";
 import { getServices } from "@/lib/queries";
 import { getSettings } from "@/lib/site-settings";
 import { Logo } from "@/components/site/logo";
@@ -49,8 +49,14 @@ export async function Footer() {
           <p className="max-w-sm text-sm leading-7 text-muted-foreground">
             {settings.footer.about}
           </p>
-          <SocialRow social={social} />
+          <SocialRow social={social} email={settings.email.primary} />
           <div className="mt-1 flex flex-col gap-2.5 text-sm">
+            {settings.address ? (
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 text-muted-foreground hover:text-primary">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><MapPin className="size-4" /></span>
+                <address className="not-italic">{settings.address}</address>
+              </a>
+            ) : null}
             {settings.phone.primary ? (
               <a
                 href={`tel:${settings.phone.primary}`}
@@ -145,41 +151,54 @@ export async function Footer() {
 
 function SocialRow({
   social,
+  email,
 }: {
+  email: string;
   social: {
     facebook?: string;
     linkedin?: string;
     instagram?: string;
     youtube?: string;
     whatsapp?: string;
+    extra?: { label: string; url: string; demo: boolean }[];
   };
 }) {
-  const items = [
+  const standard = [
+    { href: email ? `mailto:${email}` : undefined, icon: Mail, label: "Email CodAstra Labs" },
     { href: social.facebook, icon: FacebookIcon, label: "Facebook" },
     { href: social.linkedin, icon: LinkedInIcon, label: "LinkedIn" },
     { href: social.instagram, icon: InstagramIcon, label: "Instagram" },
     { href: social.youtube, icon: YoutubeIcon, label: "YouTube" },
     { href: social.whatsapp, icon: WhatsappIcon, label: "WhatsApp" },
-  ].filter((i) => i.href);
+  ].map(item => ({ ...item, demo: false }));
+  const items = [...standard, ...(social.extra ?? []).map(item => ({
+    href: item.url,
+    label: item.label,
+    demo: item.demo,
+    icon: ({ facebook: FacebookIcon, instagram: InstagramIcon, linkedin: LinkedInIcon, youtube: YoutubeIcon, whatsapp: WhatsappIcon, tiktok: Music2, reddit: MessageCircle, github: Code2 } as Record<string, React.ComponentType<{ className?: string }>>)[item.label.toLowerCase()] ?? Globe,
+  }))].filter((i) => i.href && /^(https?:\/\/|mailto:)/i.test(i.href));
 
   if (items.length === 0) return null;
   return (
     <div className="flex flex-wrap gap-2">
-      {items.map((item) => {
+      {items.map((item, index) => {
         const Icon = item.icon;
         return (
           <a
-            key={item.label}
+            key={`${item.label}-${index}`}
             href={item.href!}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={item.label}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-card text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary hover:text-primary"
+            aria-label={`${item.label}${item.demo ? " (demo link)" : ""}`}
+            title={`${item.label}${item.demo ? " (demo link)" : ""}`}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-slate-200 transition-all hover:-translate-y-0.5 hover:border-sky-400 hover:bg-white/10 hover:text-white"
           >
             <Icon className="size-4" />
+            {item.demo ? <span className="sr-only">Demo</span> : null}
           </a>
         );
       })}
+      {items.some(item => item.demo) ? <p className="w-full text-xs text-slate-400">Demo social links — company profiles coming soon.</p> : null}
     </div>
   );
 }

@@ -14,6 +14,9 @@ export async function updateSettings(
   fd: FormData
 ): Promise<ActionState> {
   await requireSession();
+  let extra: unknown;
+  try { extra = JSON.parse(formField(fd, "social_extra") || "[]"); }
+  catch { return { error: "Please check the additional social links." }; }
   const parsed = settingsSchema.safeParse({
     companyName: formField(fd, "companyName"),
     legalName: formField(fd, "legalName"),
@@ -38,6 +41,7 @@ export async function updateSettings(
       instagram: formField(fd, "social_instagram"),
       youtube: formField(fd, "social_youtube"),
       whatsapp: formField(fd, "social_whatsapp"),
+      extra,
     },
     seo: {
       title: formField(fd, "seo_title"),

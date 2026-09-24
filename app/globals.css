@@ -3,9 +3,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
+  --background: #edf1f6;
   --foreground: #080817;
-  --card: #ffffff;
+  --card: #f8fafc;
   --card-foreground: #080817;
   --popover: #ffffff;
   --popover-foreground: #080817;
@@ -13,11 +13,11 @@
   --primary-foreground: #ffffff;
   --secondary: #eef2fb;
   --secondary-foreground: #101025;
-  --muted: #f6f8ff;
+  --muted: #e5ebf3;
   --muted-foreground: #4f5365;
   --accent: #e6edff;
   --accent-foreground: #244be8;
-  --border: #e7e9f5;
+  --border: #cdd7e5;
   --input: #dde1ee;
   --ring: #244be8;
   --success: #10b981;
@@ -26,7 +26,7 @@
   --radius: 0.75rem;
   --shadow-card: 0 1px 2px rgb(14 21 38 / 0.05), 0 12px 32px -16px rgb(14 21 38 / 0.16);
   --shadow-soft: 0 40px 80px -40px rgb(14 21 38 / 0.35);
-  --grid-line: rgb(37 99 235 / 0.07);
+  --grid-line: rgb(54 83 132 / 0.10);
 }
 
 .dark {
@@ -627,7 +627,7 @@
 }
 
 .site-header {
-  background: #ffffff;
+  background: #f3f6fa;
   --foreground: #101b35;
   --muted-foreground: #46536c;
   --primary: #244be8;
@@ -721,11 +721,17 @@ html:not(.dark) .section-intro h3,
 html:not(.dark) #classes h2,
 html:not(.dark) #products h2,
 html:not(.dark) #cta h3,
-html:not(.dark) .eyebrow {
+html:not(.dark) .eyebrow:not(footer .eyebrow) {
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
   -webkit-font-smoothing: antialiased !important;
   text-rendering: geometricPrecision !important;
+}
+
+/* The footer stays dark in both themes; its labels need their own contrast. */
+footer .eyebrow {
+  color: #93c5fd;
+  -webkit-text-fill-color: #93c5fd;
 }
 html.dark .page-header-content h1,
 html.dark .page-header-content h2,

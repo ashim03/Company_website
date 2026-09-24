@@ -12,7 +12,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     settings.phone.primary;
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-clip">
+    <div className="relative isolate flex min-h-screen flex-col overflow-x-clip">
       <Aurora className="fixed inset-0 -z-20" chips scan />
       <NetworkCanvas />
       <a

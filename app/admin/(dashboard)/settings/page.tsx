@@ -1,4 +1,5 @@
 import { getSettings } from "@/lib/site-settings";
+import { SocialLinksEditor } from "@/components/admin/social-links-editor";
 import { getMedia } from "@/lib/admin-queries";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { EntityForm } from "@/components/admin/entity-form";
@@ -55,6 +56,7 @@ export default async function AdminSettingsPage() {
             <TextField label="Instagram" name="social_instagram" type="url" defaultValue={settings.social.instagram} />
             <TextField label="YouTube" name="social_youtube" type="url" defaultValue={settings.social.youtube} />
             <TextField label="WhatsApp" name="social_whatsapp" type="url" defaultValue={settings.social.whatsapp} />
+            <SocialLinksEditor initial={settings.social.extra} />
           </div>
         </section>
 

@@ -217,6 +217,11 @@ export const settingsSchema = z.object({
     instagram: optionalUrl,
     youtube: optionalUrl,
     whatsapp: optionalUrl,
+    extra: z.array(z.object({
+      label: z.string().trim().min(1).max(40),
+      url: z.string().url().refine((url) => /^https?:\/\//i.test(url), "Use an HTTP or HTTPS link"),
+      demo: z.boolean().default(false),
+    })).max(20).default([]),
   }),
   seo: z.object({
     title: z.string().trim().max(300),

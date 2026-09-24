@@ -31,7 +31,7 @@ export const defaultSiteSettings = {
     primary: "9851405271",
     secondary: "",
   },
-  address: "",
+  address: "Chhetrapati–17, Kathmandu",
   mapUrl: "",
   social: {
     facebook: "",
@@ -39,6 +39,7 @@ export const defaultSiteSettings = {
     instagram: "",
     youtube: "",
     whatsapp: "",
+    extra: [] as { label: string; url: string; demo: boolean }[],
   },
   seo: {
     title: "CodAstraLabs",

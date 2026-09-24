@@ -32,17 +32,17 @@ export function Aurora({
   const positions = [
     {
       size: "h-[34rem] w-[34rem]",
-      color: "bg-blue-500/25",
+      color: "bg-blue-500/10 dark:bg-blue-500/25",
       cls: "-top-40 -left-32",
     },
     {
       size: "h-[30rem] w-[30rem]",
-      color: "bg-cyan-400/20",
+      color: "bg-cyan-600/8 dark:bg-cyan-400/20",
       cls: "top-1/4 -right-40",
     },
     {
       size: "h-[28rem] w-[28rem]",
-      color: "bg-sky-400/20",
+      color: "bg-indigo-500/8 dark:bg-sky-400/20",
       cls: "-bottom-32 left-1/3",
     },
   ];
