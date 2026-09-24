@@ -211,7 +211,10 @@ export const settingsSchema = z.object({
   }),
   address: z.string().trim().max(500).optional().or(z.literal("")),
   mapUrl: optionalUrl,
+  mapPublished: z.boolean().default(true),
   social: z.object({
+    published: z.boolean().default(true),
+    hidden: z.array(z.enum(["facebook", "linkedin", "instagram", "youtube", "whatsapp"])).default([]),
     facebook: optionalUrl,
     linkedin: optionalUrl,
     instagram: optionalUrl,
@@ -221,6 +224,7 @@ export const settingsSchema = z.object({
       label: z.string().trim().min(1).max(40),
       url: z.string().url().refine((url) => /^https?:\/\//i.test(url), "Use an HTTP or HTTPS link"),
       demo: z.boolean().default(false),
+      published: z.boolean().default(true),
     })).max(20).default([]),
   }),
   seo: z.object({

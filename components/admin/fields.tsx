@@ -191,7 +191,7 @@ export function SwitchField({
         <p className="text-sm font-medium">{label}</p>
         {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
       </div>
-      <Switch name={name} defaultChecked={defaultChecked} label={label} />
+      <Switch name={name} defaultChecked={defaultChecked} label={label} showLabel={false} />
     </div>
   );
 }

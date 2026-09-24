@@ -9,44 +9,32 @@ export function Logo({
   className,
   imageClassName,
   priority = false,
+  variant = "header",
+  darkLogo,
 }: {
   logo?: string | null;
   name?: string;
   className?: string;
   imageClassName?: string;
   priority?: boolean;
+  variant?: "header" | "footer";
+  darkLogo?: string | null;
 }) {
+  const mark = (source?: string | null) => !source || source === "/codastralabs-logo.jpeg"
+    ? <BrandMark className={cn(variant === "footer" ? "w-16" : "w-12", imageClassName)} preload={priority} />
+    : <Image src={source} alt="" width={64} height={44} preload={priority} className={cn("h-11 w-14 object-contain", imageClassName)} />;
   return (
     <Link
       href="/"
-      className={cn("group flex items-center gap-2.5", className)}
+      className={cn("group inline-flex w-fit shrink-0 items-center gap-3 rounded-md", className)}
       aria-label={`${name} — home`}
     >
-      {!logo || logo === "/codastralabs-logo.jpeg" ? (
-        <BrandMark className={imageClassName} preload={priority} />
-      ) : logo ? (
-        <Image
-          src={logo}
-          alt={`${name} logo`}
-          width={38}
-          height={38}
-          priority={priority}
-          className={cn(
-            "h-10 w-14 object-contain",
-            imageClassName
-          )}
-        />
-      ) : (
-        <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-blue-500 via-sky-400 to-cyan-400 text-sm font-bold tracking-tight text-white shadow-[0_8px_24px_-8px_rgba(59,130,246,0.7)] transition-transform duration-300 group-hover:scale-105">
-          <span className="text-stroke absolute -bottom-1 left-0 text-[2rem] leading-none opacity-30" aria-hidden="true">
-            C
-          </span>
-          CA
-        </span>
-      )}
-      <span className="text-[1.05rem] font-semibold tracking-[-0.01em]">
+      {variant === "footer" ? mark(darkLogo || logo) : darkLogo && darkLogo !== logo ? <><span className="dark:hidden">{mark(logo)}</span><span className="hidden dark:block">{mark(darkLogo)}</span></> : mark(logo)}
+      <span className={cn("flex flex-col leading-none text-foreground", variant === "footer" ? "gap-2 text-[1.7rem]" : "gap-1.5 text-[1.2rem]")}>
+        <span className="font-semibold tracking-[-0.04em]">
         {name.replace(/\s*labs\s*$/i, "")}
-        <span className="text-primary"> Labs</span>
+        </span>
+        <span className="pl-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.36em] text-primary">Labs</span>
       </span>
     </Link>
   );

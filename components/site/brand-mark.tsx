@@ -1,19 +1,17 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-/** Display the original monogram without its surrounding wordmark or tile. */
+/** Transparent vector version of the company monogram, crisp at every size. */
 export function BrandMark({ className, preload = false }: { className?: string; preload?: boolean }) {
   return (
     <span className={cn("brand-mark relative block aspect-[555/378] w-14 shrink-0 overflow-hidden", className)}>
       <Image
-        src="/codastralabs-logo.jpeg"
-        alt="CodAstra Labs"
-        width={1254}
-        height={1254}
+        src="/codastra-mark.svg"
+        alt=""
+        width={555}
+        height={378}
         preload={preload}
-        sizes="(max-width: 640px) 160px, 280px"
-        className="absolute max-w-none"
-        style={{ width: "225.95%", height: "auto", left: "-61.26%", top: "-78.04%" }}
+        className="h-full w-full object-contain"
       />
     </span>
   );

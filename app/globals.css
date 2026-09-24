@@ -648,18 +648,16 @@
   --border: #26344d;
 }
 
-.brand-mark,
 .brand-center {
   mix-blend-mode: multiply;
 }
-.dark .brand-mark,
 .dark .brand-center,
-footer .brand-mark {
+footer .brand-center {
   mix-blend-mode: screen;
 }
 .dark .brand-mark img,
 footer .brand-mark img {
-  filter: invert(1) hue-rotate(180deg);
+  filter: brightness(1.25) saturate(0.9);
 }
 
 /* Footer — always the premium dark navy gradient regardless of theme

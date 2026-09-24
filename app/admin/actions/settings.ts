@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
-import { revalidateAll, toJson, formField, firstIssue } from "@/lib/admin";
+import { revalidateAll, toJson, formField, formBool, firstIssue } from "@/lib/admin";
 import { settingsSchema } from "@/lib/validations";
 import type { ActionState } from "@/components/admin/entity-form";
 
@@ -35,7 +35,10 @@ export async function updateSettings(
     },
     address: formField(fd, "address"),
     mapUrl: formField(fd, "mapUrl"),
+    mapPublished: formBool(fd, "mapPublished"),
     social: {
+      published: formBool(fd, "social_published"),
+      hidden: ["facebook", "linkedin", "instagram", "youtube", "whatsapp"].filter(platform => !formBool(fd, `publish_${platform}`)),
       facebook: formField(fd, "social_facebook"),
       linkedin: formField(fd, "social_linkedin"),
       instagram: formField(fd, "social_instagram"),

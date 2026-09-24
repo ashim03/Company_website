@@ -7,6 +7,7 @@ import { Container } from "@/components/site/container";
 import { ContactForm } from "@/components/site/contact-form";
 import { ContactNetwork } from "@/components/site/visuals/contact-network";
 import { text } from "@/lib/types";
+import { companyMap } from "@/lib/company-map";
 
 export const metadata: Metadata = {
   title: "Contact — CodAstra Labs",
@@ -22,6 +23,7 @@ export default async function ContactPage() {
   ]);
 
   const serviceOptions = services.map((s) => ({ slug: s.slug, name: s.name }));
+  const map = companyMap(settings.address, settings.mapUrl);
 
   return (
     <>
@@ -70,7 +72,7 @@ export default async function ContactPage() {
                     </a>
                   </li>
                 ) : null}
-                {settings.social.whatsapp ? (
+                {settings.social.published && !settings.social.hidden.includes("whatsapp") && settings.social.whatsapp ? (
                   <li>
                     <a
                       href={settings.social.whatsapp}
@@ -95,6 +97,8 @@ export default async function ContactPage() {
                 ) : null}
               </ul>
             </div>
+
+            {settings.mapPublished && map.embed ? <section className="overflow-hidden rounded-2xl border bg-card"><div className="p-5"><h2 className="font-semibold">Find us in Kathmandu</h2><p className="mt-1 text-sm text-muted-foreground">{settings.address}</p></div><iframe title="CodAstra Labs company location" src={map.embed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-64 w-full border-0" /><a href={map.directions} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center px-5 py-3 text-sm font-medium text-primary">Open directions ↗</a></section> : null}
 
             {faqs.length > 0 ? (
               <div className="rounded-2xl gradient-border bg-card/80 p-6">

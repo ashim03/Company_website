@@ -11,10 +11,12 @@ export function MobileNav({
   nav,
   companyName,
   logo,
+  darkLogo,
 }: {
   nav: NavNode[];
   companyName: string;
   logo?: string | null;
+  darkLogo?: string | null;
 }) {
   const [open, setOpen] = React.useState(false);
   const closeRef = React.useRef<HTMLButtonElement>(null);
@@ -67,7 +69,7 @@ export function MobileNav({
           />
           <div ref={panelRef} onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setOpen(false); }} className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-background shadow-soft">
             <div className="flex h-16 items-center justify-between border-b px-4">
-              <Logo logo={logo} name={companyName} />
+              <Logo logo={logo} darkLogo={darkLogo} name={companyName} />
               <Button
                 ref={closeRef}
                 variant="ghost"

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, Globe, Music2, MessageCircle, Code2 } from "lucide-react";
 import { getServices } from "@/lib/queries";
 import { getSettings } from "@/lib/site-settings";
+import { companyMap } from "@/lib/company-map";
 import { Logo } from "@/components/site/logo";
 import { Container } from "@/components/site/container";
 import {
@@ -46,17 +47,17 @@ export async function Footer() {
 
       <Container className="relative grid gap-12 py-16 md:py-20 lg:grid-cols-[1.3fr_1fr_0.9fr_1fr]">
         <div className="flex flex-col gap-5">
-          <Logo logo={settings.logo} name={settings.companyName} />
+          <Logo logo={settings.logo} darkLogo={settings.darkLogo} name={settings.companyName} variant="footer" />
           <p className="max-w-sm text-sm leading-7 text-muted-foreground">
             {settings.footer.about}
           </p>
           <SocialRow social={social} email={settings.email.primary} />
           <div className="mt-1 flex flex-col gap-2.5 text-sm">
             {settings.address ? (
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 text-muted-foreground hover:text-primary">
+              <div className="inline-flex items-center gap-2.5 text-muted-foreground">
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"><MapPin className="size-4" /></span>
-                <address className="not-italic">{settings.address}</address>
-              </a>
+                <address className="not-italic">{settings.mapPublished ? <a href={companyMap(settings.address, settings.mapUrl).directions} target="_blank" rel="noopener noreferrer" className="hover:text-primary">{settings.address}</a> : settings.address}</address>
+              </div>
             ) : null}
             {settings.phone.primary ? (
               <a
@@ -156,14 +157,17 @@ function SocialRow({
 }: {
   email: string;
   social: {
+    published?: boolean;
+    hidden?: string[];
     facebook?: string;
     linkedin?: string;
     instagram?: string;
     youtube?: string;
     whatsapp?: string;
-    extra?: { label: string; url: string; demo: boolean }[];
+    extra?: { label: string; url: string; demo: boolean; published?: boolean }[];
   };
 }) {
+  if (social.published === false) return null;
   const standard = [
     { href: email ? `mailto:${email}` : undefined, icon: Mail, label: "Email CodAstra Labs" },
     { href: social.facebook, icon: FacebookIcon, label: "Facebook" },
@@ -171,8 +175,8 @@ function SocialRow({
     { href: social.instagram, icon: InstagramIcon, label: "Instagram" },
     { href: social.youtube, icon: YoutubeIcon, label: "YouTube" },
     { href: social.whatsapp, icon: WhatsappIcon, label: "WhatsApp" },
-  ].map(item => ({ ...item, demo: false }));
-  const items = [...standard, ...(social.extra ?? []).map(item => ({
+  ].filter(item => !social.hidden?.includes(item.label.toLowerCase())).map(item => ({ ...item, demo: false }));
+  const items = [...standard, ...(social.extra ?? []).filter(item => item.published !== false).map(item => ({
     href: item.url,
     label: item.label,
     demo: item.demo,

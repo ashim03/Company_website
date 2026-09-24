@@ -14,7 +14,7 @@ export async function Header() {
   return (
     <header className="site-header sticky top-0 z-40 border-b border-border text-foreground shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
       <Container className="flex h-16 items-center justify-between gap-4">
-        <Logo logo={settings.logo} name={settings.companyName} priority />
+        <Logo logo={settings.logo} darkLogo={settings.darkLogo} name={settings.companyName} priority />
 
         <nav
           aria-label="Main navigation"
@@ -40,6 +40,7 @@ export async function Header() {
               nav={nav}
               companyName={settings.companyName}
               logo={settings.logo}
+              darkLogo={settings.darkLogo}
             />
           </div>
         </div>

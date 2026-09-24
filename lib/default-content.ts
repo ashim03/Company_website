@@ -33,13 +33,16 @@ export const defaultSiteSettings = {
   },
   address: "Chhetrapati–17, Kathmandu",
   mapUrl: "",
+  mapPublished: true,
   social: {
+    published: true,
+    hidden: [] as string[],
     facebook: "",
     linkedin: "",
     instagram: "",
     youtube: "",
     whatsapp: "",
-    extra: [] as { label: string; url: string; demo: boolean }[],
+    extra: [] as { label: string; url: string; demo: boolean; published?: boolean }[],
   },
   seo: {
     title: "CodAstraLabs",

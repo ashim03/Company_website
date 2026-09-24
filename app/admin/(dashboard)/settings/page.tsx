@@ -3,7 +3,7 @@ import { SocialLinksEditor } from "@/components/admin/social-links-editor";
 import { getMedia } from "@/lib/admin-queries";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { EntityForm } from "@/components/admin/entity-form";
-import { TextField, TextAreaField } from "@/components/admin/fields";
+import { TextField, TextAreaField, SwitchField } from "@/components/admin/fields";
 import { MediaPicker } from "@/components/admin/media-picker";
 import { updateSettings } from "@/app/admin/actions/settings";
 
@@ -45,17 +45,15 @@ export default async function AdminSettingsPage() {
             <TextField label="Secondary phone" name="phone_secondary" defaultValue={settings.phone.secondary} />
           </div>
           <TextAreaField label="Address" name="address" defaultValue={settings.address} rows={2} />
-          <TextField label="Map URL" name="mapUrl" type="url" defaultValue={settings.mapUrl} />
+          <TextField label="Map URL" name="mapUrl" type="url" defaultValue={settings.mapUrl} hint="Paste a Google Maps share or embed URL. Leave blank to use the company address." />
+          <SwitchField label="Publish company map" name="mapPublished" defaultChecked={settings.mapPublished} hint="Show the map on Contact and enable the footer directions link. Unpublishing keeps your address visible." />
         </section>
 
         <section className="space-y-4 rounded-lg border bg-card p-4">
           <h2 className="text-sm font-semibold">Social links</h2>
+          <SwitchField label="Publish social links" name="social_published" defaultChecked={settings.social.published} hint="Turn off to hide all social profiles without removing their URLs. Save settings to apply." />
           <div className="grid gap-4 sm:grid-cols-2">
-            <TextField label="Facebook" name="social_facebook" type="url" defaultValue={settings.social.facebook} />
-            <TextField label="LinkedIn" name="social_linkedin" type="url" defaultValue={settings.social.linkedin} />
-            <TextField label="Instagram" name="social_instagram" type="url" defaultValue={settings.social.instagram} />
-            <TextField label="YouTube" name="social_youtube" type="url" defaultValue={settings.social.youtube} />
-            <TextField label="WhatsApp" name="social_whatsapp" type="url" defaultValue={settings.social.whatsapp} />
+            {([['facebook', 'Facebook'], ['linkedin', 'LinkedIn'], ['instagram', 'Instagram'], ['youtube', 'YouTube'], ['whatsapp', 'WhatsApp']] as const).map(([key, label]) => <div key={key} className="space-y-3 rounded-xl border p-3"><TextField label={label} name={`social_${key}`} type="url" defaultValue={settings.social[key]} /><SwitchField label={`Publish ${label}`} name={`publish_${key}`} defaultChecked={!settings.social.hidden.includes(key)} /></div>)}
             <SocialLinksEditor initial={settings.social.extra} />
           </div>
         </section>

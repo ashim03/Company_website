@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-type SocialLink = { label: string; url: string; demo: boolean };
+type SocialLink = { label: string; url: string; demo: boolean; published?: boolean };
 export function SocialLinksEditor({ initial }: { initial: SocialLink[] }) {
   const [links, setLinks] = useState(initial);
   const update = (index: number, value: Partial<SocialLink>) => setLinks(links.map((link, i) => i === index ? { ...link, ...value } : link));
@@ -13,8 +13,9 @@ export function SocialLinksEditor({ initial }: { initial: SocialLink[] }) {
       <label className="space-y-1 text-sm">Platform name<Input value={link.label} required maxLength={40} onChange={e => update(i, { label: e.target.value })} /></label>
       <label className="space-y-1 text-sm">Profile URL<Input type="url" value={link.url} required onChange={e => update(i, { url: e.target.value })} /></label>
       <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={link.demo} onChange={e => update(i, { demo: e.target.checked })} />Demo link</label>
+      <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={link.published !== false} onChange={e => update(i, { published: e.target.checked })} />Published on website</label>
       <Button variant="outline" onClick={() => setLinks(links.filter((_, index) => index !== i))}>Remove {link.label || "link"}</Button>
     </div>)}
-    <Button variant="outline" disabled={links.length >= 20} onClick={() => setLinks([...links, { label: "", url: "", demo: false }])}>Add social platform</Button>
+    <Button variant="outline" disabled={links.length >= 20} onClick={() => setLinks([...links, { label: "", url: "", demo: false, published: false }])}>Add social platform</Button>
   </div>;
 }

@@ -10,6 +10,7 @@ export function Switch({
   name,
   disabled,
   label,
+  showLabel = true,
   className,
 }: {
   checked?: boolean;
@@ -18,6 +19,7 @@ export function Switch({
   name?: string;
   disabled?: boolean;
   label?: string;
+  showLabel?: boolean;
   className?: string;
 }) {
   const [inner, setInner] = React.useState(Boolean(defaultChecked));
@@ -61,7 +63,7 @@ export function Switch({
           )}
         />
       </span>
-      {label ? <span className="text-sm font-medium">{label}</span> : null}
+      {label && showLabel ? <span className="text-sm font-medium">{label}</span> : null}
     </label>
   );
 }

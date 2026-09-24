@@ -25,6 +25,7 @@ function mergeSettings(defaults: SiteSettingsData, stored: unknown): SiteSetting
     phone: { ...defaults.phone, ...(isRecord(s.phone) ? s.phone : {}) },
     ...(typeof s.address === "string" ? { address: s.address } : {}),
     ...(typeof s.mapUrl === "string" ? { mapUrl: s.mapUrl } : {}),
+    ...(typeof s.mapPublished === "boolean" ? { mapPublished: s.mapPublished } : {}),
     social: { ...defaults.social, ...(isRecord(s.social) ? s.social : {}) },
     seo: { ...defaults.seo, ...(isRecord(s.seo) ? s.seo : {}) },
     footer: { ...defaults.footer, ...(isRecord(s.footer) ? s.footer : {}) },

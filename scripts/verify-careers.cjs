@@ -10,7 +10,7 @@ const base=process.env.TEST_BASE_URL || 'http://localhost:3112';
  let created=false;
  try{
   await page.goto(base+'/services');
-  await page.getByRole('link',{name:'Websites',exact:true}).click();
+  await page.locator('main').getByRole('link',{name:'Websites',exact:true}).click();
   await page.waitForURL('**/services/websites');
   await page.goto(base+'/products');
   const product=page.getByRole('link').filter({hasText:'open product'}).first();
@@ -27,6 +27,7 @@ const base=process.env.TEST_BASE_URL || 'http://localhost:3112';
   await page.getByRole('button',{name:'Save vacancy'}).click();
   await page.waitForURL('**/admin/careers?ok=1'); created=true;
   await page.getByRole('row').filter({hasText:title}).getByRole('link',{name:'Edit',exact:true}).click();
+  await page.getByRole('heading',{name:`Edit ${title}`,exact:true}).waitFor();
   assert.equal(await page.getByLabel('Role title',{exact:true}).inputValue(),title);
   await page.getByLabel('Publication status').selectOption('CLOSED');
   await page.getByRole('button',{name:'Save vacancy'}).click();
