@@ -25,9 +25,6 @@ export const metadata: Metadata = {
     template: `%s | ${settings.companyName}`,
   },
   description: settings.seo.description,
-  icons: {
-    icon: settings.favicon || "/codastralabs-logo.jpeg",
-  },
   openGraph: {
     type: "website",
     siteName: settings.companyName,
