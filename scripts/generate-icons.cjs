@@ -5,7 +5,7 @@ const fs = require('node:fs/promises');
 async function main() {
   // Same monogram bounds as BrandMark; omit the wordmark at tab-icon sizes.
   const source = sharp('public/codastralabs-logo.jpeg').extract({ left: 340, top: 295, width: 555, height: 378 });
-  const make = size => source.clone().resize(size, size, { fit: 'contain', background: '#f3f6fa' }).png().toBuffer();
+  const make = size => source.clone().resize(size, size, { fit: 'contain', background: '#f3f6fa' }).ensureAlpha().png().toBuffer();
   const sizes = [16, 32, 48];
   const images = await Promise.all(sizes.map(make));
   const header = Buffer.alloc(6 + 16 * sizes.length);
