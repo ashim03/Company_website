@@ -106,12 +106,17 @@ export const getNavTree = cache(async (): Promise<NavNode[]> => {
   // database hiccup turn the primary nav into a list of service detail links.
   const fallback: NavNode[] = [
     { id: "fallback-home", label: "Home", url: "/", isExternal: false, children: [] },
-    { id: "fallback-services", label: "Services", url: "/services", isExternal: false, children: [] },
-    { id: "fallback-products", label: "Products", url: "/products", isExternal: false, children: [] },
+    { id: "fallback-company", label: "Company", url: "/company", isExternal: false, children: [
+      { id: "fallback-about", label: "About Us", url: "/company", isExternal: false, children: [] },
+      { id: "fallback-work", label: "Work", url: "/work", isExternal: false, children: [] },
+      { id: "fallback-careers", label: "Careers", url: "/careers", isExternal: false, children: [] },
+      { id: "fallback-insights", label: "Insights", url: "/insights", isExternal: false, children: [] },
+    ] },
+    { id: "fallback-services", label: "Services", url: "/services", isExternal: false, children: [
+      { id: "fallback-services-all", label: "Services", url: "/services", isExternal: false, children: [] },
+      { id: "fallback-products", label: "Products", url: "/products", isExternal: false, children: [] },
+    ] },
     { id: "fallback-classes", label: "Classes", url: "/classes", isExternal: false, children: [] },
-    { id: "fallback-company", label: "About Us", url: "/company", isExternal: false, children: [] },
-    { id: "fallback-work", label: "Work", url: "/work", isExternal: false, children: [] },
-    { id: "fallback-careers", label: "Careers", url: "/careers", isExternal: false, children: [] },
     { id: "fallback-contact", label: "Contact", url: "/contact", isExternal: false, children: [] },
   ];
 

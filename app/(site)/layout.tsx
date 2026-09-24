@@ -7,6 +7,7 @@ import { getSettings } from "@/lib/site-settings";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSettings();
+  const whatsappPublished = settings.social.published && !settings.social.hidden.includes("whatsapp");
   const whatsappNumber =
     settings.social.whatsapp?.match(/(?:wa\.me\/|api\.whatsapp\.com\/send\?phone=)(\d+)/)?.[1] ||
     settings.phone.primary;
@@ -27,8 +28,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       </main>
       <Footer />
       <SiteWidgets
-        whatsappUrl={settings.social.whatsapp || ""}
-        whatsappNumber={whatsappNumber}
+        whatsappUrl={whatsappPublished ? settings.social.whatsapp || "" : ""}
+        whatsappNumber={whatsappPublished ? whatsappNumber : ""}
         phone={settings.phone.primary}
         email={settings.email.primary}
       />

@@ -65,8 +65,9 @@ async function main() {
   // --- Navigation ----------------------------------------------------
   await prisma.navigationItem.deleteMany({});
   for (const item of defaultNav) {
+    const { children, ...parent } = item;
     await prisma.navigationItem.create({
-      data: { ...item, isVisible: true },
+      data: { ...parent, isVisible: true, children: { create: children.map(child => ({ ...child, isVisible: true })) } },
     });
   }
 

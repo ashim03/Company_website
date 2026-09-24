@@ -1,26 +1,26 @@
-﻿import Link from "next/link";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { getNavTree } from "@/lib/queries";
 import { getSettings } from "@/lib/site-settings";
 import { Logo } from "@/components/site/logo";
 import { Container } from "@/components/site/container";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { MobileNav } from "@/components/site/mobile-nav";
-import type { NavNode } from "@/lib/types";
+import { DesktopNav } from "@/components/site/desktop-nav";
 
 export async function Header() {
   const [nav, settings] = await Promise.all([getNavTree(), getSettings()]);
 
   return (
     <header className="site-header sticky top-0 z-40 border-b border-border text-foreground shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
-      <Container className="flex h-16 items-center justify-between gap-4">
+      <Container className="flex h-24 items-center justify-between gap-4">
         <Logo logo={settings.logo} darkLogo={settings.darkLogo} name={settings.companyName} priority />
 
         <nav
           aria-label="Main navigation"
           className="hidden items-center gap-0.5 xl:flex"
         >
-          <NavItems items={nav} />
+          <DesktopNav items={nav} />
         </nav>
 
         <div className="flex items-center gap-2">
@@ -53,56 +53,4 @@ export async function Header() {
   );
 }
 
-function NavItems({ items }: { items: NavNode[] }) {
-  if (!items.length) return null;
-  return (
-    <ul className="flex items-center">
-      {items.map((item) => {
-        if (item.children.length > 0) {
-          return (
-            <li key={item.id} className="group relative">
-              <Link
-                href={item.url}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noopener noreferrer" : undefined}
-                className="flex h-16 items-center gap-1 px-3.5 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {item.label}
-                <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" />
-              </Link>
-              <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition-[opacity,visibility] group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <ul className="w-56 overflow-hidden rounded-xl border bg-popover/95 p-1.5 shadow-soft backdrop-blur-xl">
-                  {item.children.map((child) => (
-                    <li key={child.id}>
-                      <Link
-                        href={child.url}
-                        target={child.isExternal ? "_blank" : undefined}
-                        rel={child.isExternal ? "noopener noreferrer" : undefined}
-                        className="group/child flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-                      >
-                        {child.label}
-                        <ArrowUpRight className="size-3.5 -translate-x-1 translate-y-1 opacity-0 transition-all group-hover/child:translate-x-0 group-hover/child:translate-y-0 group-hover/child:opacity-100" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          );
-        }
-        return (
-          <li key={item.id} className="group">
-            <Link
-              href={item.url}
-              target={item.isExternal ? "_blank" : undefined}
-              rel={item.isExternal ? "noopener noreferrer" : undefined}
-              className="relative flex h-16 items-center px-3.5 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:text-foreground after:absolute after:bottom-[1.05rem] after:left-1/2 after:h-[3px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-blue-500 after:to-cyan-400 after:transition-all after:duration-300 group-hover:after:w-5"
-            >
-              {item.label}
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
+

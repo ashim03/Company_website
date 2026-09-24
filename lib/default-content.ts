@@ -861,14 +861,19 @@ If a feature does not survive contact with a real workflow, it does not belong i
 export const defaultClients: Prisma.ClientUncheckedCreateInput[] = [];
 
 export const defaultNav = [
-  { label: "Home", url: "/", sortOrder: 1 },
-  { label: "About Us", url: "/company", sortOrder: 2 },
-  { label: "Services", url: "/services", sortOrder: 3 },
-  { label: "Products", url: "/products", sortOrder: 4 },
-  { label: "Classes", url: "/classes", sortOrder: 5 },
-  { label: "Work", url: "/work", sortOrder: 6 },
-  { label: "Careers", url: "/careers", sortOrder: 7 },
-  { label: "Contact", url: "/contact", sortOrder: 8 },
+  { label: "Home", url: "/", sortOrder: 1, children: [] },
+  { label: "Company", url: "/company", sortOrder: 2, children: [
+    { label: "About Us", url: "/company", sortOrder: 1 },
+    { label: "Work", url: "/work", sortOrder: 2 },
+    { label: "Careers", url: "/careers", sortOrder: 3 },
+    { label: "Insights", url: "/insights", sortOrder: 4 },
+  ] },
+  { label: "Services", url: "/services", sortOrder: 3, children: [
+    { label: "Services", url: "/services", sortOrder: 1 },
+    { label: "Products", url: "/products", sortOrder: 2 },
+  ] },
+  { label: "Classes", url: "/classes", sortOrder: 4, children: [] },
+  { label: "Contact", url: "/contact", sortOrder: 5, children: [] },
 ];
 
 export const defaultFooterLinks = {

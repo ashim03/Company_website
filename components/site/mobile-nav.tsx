@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
 import type { NavNode } from "@/lib/types";
@@ -19,6 +19,7 @@ export function MobileNav({
   darkLogo?: string | null;
 }) {
   const [open, setOpen] = React.useState(false);
+  const [expanded, setExpanded] = React.useState<string | null>(null);
   const closeRef = React.useRef<HTMLButtonElement>(null);
   const openRef = React.useRef<HTMLButtonElement>(null);
   const panelRef = React.useRef<HTMLDivElement>(null);
@@ -68,7 +69,7 @@ export function MobileNav({
             aria-hidden="true"
           />
           <div ref={panelRef} onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setOpen(false); }} className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-background shadow-soft">
-            <div className="flex h-16 items-center justify-between border-b px-4">
+            <div className="flex h-24 shrink-0 items-center justify-between border-b px-4">
               <Logo logo={logo} darkLogo={darkLogo} name={companyName} />
               <Button
                 ref={closeRef}
@@ -84,7 +85,7 @@ export function MobileNav({
               <ul className="space-y-1">
                 {nav.map((item) => (
                   <li key={item.id}>
-                    <Link
+                    {item.children.length ? <button type="button" aria-expanded={expanded === item.id} aria-controls={`mobile-nav-${item.id}`} onClick={() => setExpanded(expanded === item.id ? null : item.id)} className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium hover:bg-secondary">{item.label}<ChevronDown className={`size-4 transition-transform ${expanded === item.id ? "rotate-180" : ""}`} /></button> : <Link
                       href={item.url}
                       target={item.isExternal ? "_blank" : undefined}
                       rel={item.isExternal ? "noopener noreferrer" : undefined}
@@ -92,9 +93,9 @@ export function MobileNav({
                       className="block rounded-lg px-3 py-2.5 text-base font-medium text-foreground hover:bg-secondary"
                     >
                       {item.label}
-                    </Link>
+                    </Link>}
                     {item.children.length > 0 ? (
-                      <ul className="mt-1 space-y-1 border-l pl-4">
+                      <ul id={`mobile-nav-${item.id}`} hidden={expanded !== item.id} className="mt-1 space-y-1 border-l pl-4">
                         {item.children.map((child) => (
                           <li key={child.id}>
                             <Link

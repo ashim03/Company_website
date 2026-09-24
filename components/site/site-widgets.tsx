@@ -26,6 +26,7 @@ const ANSWERS: Record<string, string> = {
 };
 
 function waLink(url: string, number: string, text: string) {
+  if (!url && !number) return "/contact";
   if (url) return `${url}${url.includes("?") ? "&" : "?"}text=${encodeURIComponent(text)}`;
   const num = number.replace(/[^0-9]/g, "");
   const intl = num.startsWith("977") ? num : num.length === 10 ? `977${num}` : num;
@@ -76,7 +77,7 @@ export function SiteWidgets({ whatsappUrl, whatsappNumber, phone, email }: SiteW
           () =>
             pushBot(
               "Hi! I'm the CodAstra Labs assistant. How can I help you today?",
-              { label: "Chat on WhatsApp", href: waLink(whatsappUrl, whatsappNumber, "Hi CodAstra Labs! I'd like to know more about your services.") }
+              { label: whatsappUrl || whatsappNumber ? "Chat on WhatsApp" : "Contact the team", href: waLink(whatsappUrl, whatsappNumber, "Hi CodAstra Labs! I'd like to know more about your services.") }
             ),
           250
         );
@@ -94,13 +95,13 @@ export function SiteWidgets({ whatsappUrl, whatsappNumber, phone, email }: SiteW
   const answer = (topic: string) => {
     if (topic === "more") {
       pushBot(ANSWERS.more, {
-        label: "Chat on WhatsApp",
+        label: whatsappUrl || whatsappNumber ? "Chat on WhatsApp" : "Contact the team",
         href: waLink(whatsappUrl, whatsappNumber, "Hi CodAstra Labs! I'd like to know more about your services or classes."),
       });
       return;
     }
     pushBot(ANSWERS[topic], {
-      label: "Chat on WhatsApp",
+      label: whatsappUrl || whatsappNumber ? "Chat on WhatsApp" : "Contact the team",
       href: waLink(whatsappUrl, whatsappNumber, `Hi CodAstra Labs! I'm interested in: ${topic}`),
     });
   };
@@ -112,8 +113,8 @@ export function SiteWidgets({ whatsappUrl, whatsappNumber, phone, email }: SiteW
     setMessages((m) => [...m, { from: "user", text: value }]);
     setTimeout(
       () =>
-        pushBot("Thanks for reaching out! To get a fast, tailored answer from our team, continue the conversation on WhatsApp.", {
-          label: "Chat on WhatsApp",
+        pushBot("Thanks for reaching out! To get a fast, tailored answer from our team, continue the conversation with our team.", {
+          label: whatsappUrl || whatsappNumber ? "Chat on WhatsApp" : "Contact the team",
           href: waLink(whatsappUrl, whatsappNumber, `Hi CodAstra Labs! ${value}`),
         }),
       350
@@ -257,3 +258,4 @@ export function SiteWidgets({ whatsappUrl, whatsappNumber, phone, email }: SiteW
     </>
   );
 }
+
