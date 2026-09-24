@@ -9,13 +9,20 @@ const LINKS = [
   ["/admin/services", "Services"],
   ["/admin/products", "Products"],
   ["/admin/projects", "Projects"],
+  ["/admin/clients", "Clients"],
+  ["/admin/testimonials", "Testimonials"],
+  ["/admin/team", "Team"],
+  ["/admin/careers", "Careers"],
+  ["/admin/faqs", "FAQs"],
   ["/admin/courses", "Courses"],
   ["/admin/blog", "Insights"],
   ["/admin/pages", "Pages"],
+  ["/admin/navigation", "Navigation"],
   ["/admin/media", "Media"],
   ["/admin/enquiries", "Enquiries"],
   ["/admin/enrollments", "Enrollments"],
   ["/admin/settings", "Settings"],
+  ["/admin/users", "Users"],
 ] as const;
 
 export function MobileAdminNav() {

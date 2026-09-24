@@ -40,13 +40,15 @@ export function MediaUpload() {
               if (!file) return;
               setPending(true);
               setError(null);
-              const result = await uploadMediaAction(file, folder);
-              setPending(false);
-              if (!result.ok) {
-                setError(result.error);
-                return;
+              try {
+                const result = await uploadMediaAction(file, folder);
+                if (!result.ok) { setError(result.error); return; }
+                router.refresh();
+              } catch {
+                setError("Upload failed. Please try again.");
+              } finally {
+                setPending(false);
               }
-              router.refresh();
             }}
           />
         </div>

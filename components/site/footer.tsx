@@ -18,6 +18,7 @@ export async function Footer() {
   const social = settings.social;
   const companyLinks = [
     { label: "About us", url: "/company" },
+    { label: "Careers", url: "/careers" },
     { label: "How we work", url: "/process" },
     { label: "Our work", url: "/work" },
     { label: "Classes", url: "/classes" },

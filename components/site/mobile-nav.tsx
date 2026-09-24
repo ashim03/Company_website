@@ -19,6 +19,7 @@ export function MobileNav({
   const [open, setOpen] = React.useState(false);
   const closeRef = React.useRef<HTMLButtonElement>(null);
   const openRef = React.useRef<HTMLButtonElement>(null);
+  const panelRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (!open) return;
@@ -27,6 +28,14 @@ export function MobileNav({
     const triggerButton = openRef.current;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
+      if (e.key === "Tab") {
+        const controls = panelRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -50,13 +59,13 @@ export function MobileNav({
       </Button>
 
       {open ? (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 xl:hidden" role="dialog" aria-modal="true" aria-label="Website navigation">
           <div
             className="absolute inset-0 bg-black/50"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
-          <div className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-background shadow-soft">
+          <div ref={panelRef} onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setOpen(false); }} className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-background shadow-soft">
             <div className="flex h-16 items-center justify-between border-b px-4">
               <Logo logo={logo} name={companyName} />
               <Button
@@ -75,6 +84,8 @@ export function MobileNav({
                   <li key={item.id}>
                     <Link
                       href={item.url}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
                       onClick={() => setOpen(false)}
                       className="block rounded-lg px-3 py-2.5 text-base font-medium text-foreground hover:bg-secondary"
                     >
@@ -86,6 +97,8 @@ export function MobileNav({
                           <li key={child.id}>
                             <Link
                               href={child.url}
+                              target={child.isExternal ? "_blank" : undefined}
+                              rel={child.isExternal ? "noopener noreferrer" : undefined}
                               onClick={() => setOpen(false)}
                               className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-secondary"
                             >

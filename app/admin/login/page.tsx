@@ -21,7 +21,7 @@ export default function LoginPage() {
           <ArrowLeft className="size-4" />
           Back to website
         </Link>
-        <div className="space-y-6 rounded-2xl border border-white/10 bg-white/[0.97] p-6 shadow-2xl shadow-blue-950/40 sm:p-7">
+        <div className="space-y-6 rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-2xl shadow-blue-950/40 sm:p-7">
           <div className="space-y-1">
             <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-lg font-bold text-primary-foreground">
               C

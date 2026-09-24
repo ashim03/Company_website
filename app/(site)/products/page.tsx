@@ -20,6 +20,7 @@ export default async function ProductsPage() {
   const products = await getProducts();
 
   const showcase: ShowcaseProduct[] = products.map((p) => ({
+    slug: p.slug,
     name: p.name,
     tagline: p.tagline ? text(p.tagline) : undefined,
     logo: p.logo ?? undefined,

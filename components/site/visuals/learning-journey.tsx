@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { BookOpen, Repeat, Hammer, Rocket, GraduationCap, ArrowUpRight } from "lucide-react";
+import { BookOpen, Repeat, Hammer, Rocket, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./learning-journey.module.css";
 
@@ -17,7 +17,6 @@ export function LearningJourney({ className }: { className?: string }) {
       <div className={styles.heading}>
         <span className={styles.cap}><GraduationCap size={22} /></span>
         <div><span className={styles.eyebrow}>YOUR LEARNING JOURNEY</span><p>Small steps. Real skills.</p></div>
-        <ArrowUpRight className={styles.arrow} size={20} aria-hidden="true" />
       </div>
       <div className={styles.path}>
         <div className={styles.spine} aria-hidden="true"><i /></div>
@@ -31,7 +30,6 @@ export function LearningJourney({ className }: { className?: string }) {
                   <div className={styles.title}><span>0{i + 1}</span><h3>{step.label}</h3></div>
                   <p>{step.detail}</p>
                 </div>
-                <span className={styles.note} aria-hidden="true">{step.note}<ArrowUpRight size={12} /></span>
               </li>
             );
           })}

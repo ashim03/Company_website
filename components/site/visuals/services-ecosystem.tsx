@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { BrandMark } from "@/components/site/brand-mark";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,7 @@ import { ServiceIcon } from "@/components/site/service-icon";
  */
 
 interface ServiceNode {
+  slug: string;
   name: string;
   icon?: string | null;
   short: string;
@@ -25,7 +27,7 @@ export function ServicesEcosystem({
   services,
   className,
 }: {
-  services: { name: string; icon?: string | null; shortDescription?: string | null }[];
+  services: { slug: string; name: string; icon?: string | null; shortDescription?: string | null }[];
   className?: string;
 }) {
   const [active, setActive] = React.useState<number | null>(null);
@@ -38,6 +40,7 @@ export function ServicesEcosystem({
     return services.map((s, i) => {
       const angle = ((i + 0.5) / Math.max(services.length, 1)) * Math.PI * 2 - Math.PI / 2;
       return {
+        slug: s.slug,
         name: s.name,
         icon: s.icon,
         short: s.shortDescription ?? "",
@@ -80,11 +83,11 @@ export function ServicesEcosystem({
           return (
             <div
               key={`${n.name}-${i}`}
-              className="animate-bob absolute -translate-x-1/2 -translate-y-1/2 motion-reduce:animate-none"
+              className="absolute -translate-x-1/2 -translate-y-1/2"
               style={{ left: `${n.point.x}%`, top: `${n.point.y}%`, zIndex: isActive ? 20 : 1 }}
             >
-              <button
-                type="button"
+              <Link
+                href={`/services/${n.slug}`}
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(i)}
@@ -119,7 +122,7 @@ export function ServicesEcosystem({
                 >
                   open <ArrowUpRight className="size-3" />
                 </span>
-              </button>
+              </Link>
             </div>
           );
         })}
@@ -128,7 +131,7 @@ export function ServicesEcosystem({
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-2">
           <GlowDot />
           <span className="font-mono text-[0.58rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-            the full lifecycle — hover a service to expand
+            explore a service to learn more
           </span>
         </div>
       </div>

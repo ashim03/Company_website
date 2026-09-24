@@ -39,11 +39,12 @@ export function MediaPicker({
 
   return (
     <div className={className}>
-      <Label className="text-sm font-medium">{label}</Label>
+      <Label htmlFor={`media-${name}`} className="text-sm font-medium">{label}</Label>
       <div className="mt-1.5 space-y-2">
         <div className="flex gap-2">
           <Input
-            type="url"
+            id={`media-${name}`}
+            type="text"
             name={name}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -84,8 +85,8 @@ export function MediaPicker({
                 if (!file) return;
                 setUploading(true);
                 setError(null);
+                try {
                 const result = await uploadMediaAction(file, folder);
-                setUploading(false);
                 if (result.ok) {
                   setUrl(result.url);
                   setItems((prev) => [
@@ -94,6 +95,11 @@ export function MediaPicker({
                   ]);
                 } else {
                   setError(result.error);
+                }
+                } catch {
+                  setError("Upload failed. Please try again.");
+                } finally {
+                  setUploading(false);
                 }
               }}
             />

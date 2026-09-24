@@ -864,7 +864,8 @@ export const defaultNav = [
   { label: "Products", url: "/products", sortOrder: 4 },
   { label: "Classes", url: "/classes", sortOrder: 5 },
   { label: "Work", url: "/work", sortOrder: 6 },
-  { label: "Contact", url: "/contact", sortOrder: 7 },
+  { label: "Careers", url: "/careers", sortOrder: 7 },
+  { label: "Contact", url: "/contact", sortOrder: 8 },
 ];
 
 export const defaultFooterLinks = {

@@ -18,7 +18,7 @@ export async function Header() {
 
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-0.5 lg:flex"
+          className="hidden items-center gap-0.5 xl:flex"
         >
           <NavItems items={nav} />
         </nav>
@@ -35,7 +35,7 @@ export async function Header() {
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </span>
           </Link>
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             <MobileNav
               nav={nav}
               companyName={settings.companyName}
@@ -60,20 +60,23 @@ function NavItems({ items }: { items: NavNode[] }) {
         if (item.children.length > 0) {
           return (
             <li key={item.id} className="group relative">
-              <button
-                type="button"
+              <Link
+                href={item.url}
+                target={item.isExternal ? "_blank" : undefined}
+                rel={item.isExternal ? "noopener noreferrer" : undefined}
                 className="flex h-16 items-center gap-1 px-3.5 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-haspopup="true"
               >
                 {item.label}
                 <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" />
-              </button>
+              </Link>
               <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition-[opacity,visibility] group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                 <ul className="w-56 overflow-hidden rounded-xl border bg-popover/95 p-1.5 shadow-soft backdrop-blur-xl">
                   {item.children.map((child) => (
                     <li key={child.id}>
                       <Link
                         href={child.url}
+                        target={child.isExternal ? "_blank" : undefined}
+                        rel={child.isExternal ? "noopener noreferrer" : undefined}
                         className="group/child flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
                       >
                         {child.label}
@@ -90,6 +93,8 @@ function NavItems({ items }: { items: NavNode[] }) {
           <li key={item.id} className="group">
             <Link
               href={item.url}
+              target={item.isExternal ? "_blank" : undefined}
+              rel={item.isExternal ? "noopener noreferrer" : undefined}
               className="relative flex h-16 items-center px-3.5 text-[0.95rem] font-medium text-muted-foreground transition-colors hover:text-foreground after:absolute after:bottom-[1.05rem] after:left-1/2 after:h-[3px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-gradient-to-r after:from-blue-500 after:to-cyan-400 after:transition-all after:duration-300 group-hover:after:w-5"
             >
               {item.label}

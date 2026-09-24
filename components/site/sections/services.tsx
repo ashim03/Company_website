@@ -8,6 +8,7 @@ import { ServiceIcon } from "@/components/site/service-icon";
 
 interface Pillar {
   title: string;
+  href?: string;
   icon?: string;
   points: string[];
 }
@@ -15,6 +16,7 @@ interface Pillar {
 const DEFAULT_ITEMS: Pillar[] = [
   {
     title: "Digital Marketing",
+    href: "/services/digital-marketing-branding",
     icon: "trending-up",
     points: [
       "Social media marketing",
@@ -27,6 +29,7 @@ const DEFAULT_ITEMS: Pillar[] = [
   },
   {
     title: "Graphic Design & Creative Services",
+    href: "/services/digital-marketing-branding",
     icon: "paintbrush",
     points: [
       "Brand identity",
@@ -39,6 +42,7 @@ const DEFAULT_ITEMS: Pillar[] = [
   },
   {
     title: "Social Media Management",
+    href: "/services/digital-marketing-branding",
     icon: "globe",
     points: [
       "Facebook, Instagram & TikTok management",
@@ -50,6 +54,7 @@ const DEFAULT_ITEMS: Pillar[] = [
   },
   {
     title: "Web & Software Solutions",
+    href: "/services/web-apps",
     icon: "code",
     points: [
       "Website development",
@@ -62,6 +67,7 @@ const DEFAULT_ITEMS: Pillar[] = [
   },
   {
     title: "IT & Digital Solutions",
+    href: "/services/cloud-devops",
     icon: "shield",
     points: [
       "Cloud solutions",
@@ -74,6 +80,7 @@ const DEFAULT_ITEMS: Pillar[] = [
   },
   {
     title: "Professional Classes & Training",
+    href: "/classes",
     icon: "rocket",
     points: [
       "IT and digital marketing classes",
@@ -93,6 +100,7 @@ export function ServicesSection({ content }: { content: Inner }) {
         const r = asRecord(item);
         return {
           title: text(r.title) || "Service",
+          href: text(r.href).startsWith("/") && !text(r.href).startsWith("//") ? text(r.href) : "/services",
           icon: r.icon ? text(r.icon) : undefined,
           points: stringArray(r.points),
         };
@@ -146,10 +154,10 @@ export function ServicesSection({ content }: { content: Inner }) {
                     </li>
                   ))}
                 </ul>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-medium text-primary">
+                <Link href={pillar.href || "/services"} aria-label={`Explore ${pillar.title}`} className="mt-auto inline-flex min-h-11 items-center gap-1.5 pt-2 text-sm font-medium text-primary">
                   Explore service
                   <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </span>
+                </Link>
               </div>
             </SpotlightCard>
           </Reveal>

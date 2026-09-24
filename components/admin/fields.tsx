@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 
 type FieldProps = {
   label: string;
+  htmlFor?: string;
   hint?: string;
   required?: boolean;
   className?: string;
 };
 
 function FieldShell({
+  htmlFor,
   label,
   hint,
   required,
@@ -20,7 +22,7 @@ function FieldShell({
 }: FieldProps & { children: React.ReactNode }) {
   return (
     <div className={cn("space-y-1.5", className)}>
-      <Label className="text-sm font-medium">
+      <Label htmlFor={htmlFor} className="text-sm font-medium">
         {label}
         {required ? <span className="ml-0.5 text-destructive">*</span> : null}
       </Label>
@@ -50,8 +52,9 @@ export function TextField({
   max?: number;
 }) {
   return (
-    <FieldShell label={label} hint={hint} required={required} className={className}>
+    <FieldShell htmlFor={name} label={label} hint={hint} required={required} className={className}>
       <Input
+        id={name}
         type={type}
         name={name}
         defaultValue={defaultValue}
@@ -80,8 +83,9 @@ export function TextAreaField({
   rows?: number;
 }) {
   return (
-    <FieldShell label={label} hint={hint} required={required} className={className}>
+    <FieldShell htmlFor={name} label={label} hint={hint} required={required} className={className}>
       <Textarea
+        id={name}
         name={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
@@ -104,12 +108,14 @@ export function ListField({
 }) {
   return (
     <FieldShell
+      htmlFor={name}
       label={label}
       required={false}
       hint={hint ?? "One item per line."}
       className={className}
     >
       <Textarea
+        id={name}
         name={name}
         defaultValue={defaultValue.join("\n")}
         rows={4}
@@ -133,7 +139,7 @@ export function SelectField({
   defaultValue?: string;
 }) {
   return (
-    <FieldShell label={label} hint={hint} required={required} className={className}>
+    <FieldShell htmlFor={name} label={label} hint={hint} required={required} className={className}>
       <NativeSelect name={name} defaultValue={defaultValue} options={options} />
     </FieldShell>
   );
@@ -152,6 +158,7 @@ export function NativeSelect({
 }) {
   return (
     <select
+      id={name}
       name={name}
       defaultValue={defaultValue}
       className={cn(

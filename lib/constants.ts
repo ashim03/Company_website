@@ -44,6 +44,7 @@ export const PUBLIC_PATHS = [
   "/company",
   "/process",
   "/classes",
+  "/careers",
   "/contact",
 ] as const;
 

@@ -84,6 +84,7 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
   const [typed, setTyped] = React.useState(Math.min(TOTAL, 4));
   const [tab, setTab] = React.useState<TabId>("code");
   const [productIndex, setProductIndex] = React.useState(0);
+  const [paused, setPaused] = React.useState(false);
 
   const miniProducts = React.useMemo(() => products.map(toMiniProduct), [products]);
 
@@ -106,7 +107,7 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
 
   React.useEffect(() => {
     if (reduced) return;
-    if (!typingDone) return;
+    if (!typingDone || paused) return;
     // Continuous cycle: code (2.2 s) -> product (4.2 s) -> code ...
     const delay = tab === "code" ? 2200 : 4200;
     const id = window.setTimeout(
@@ -114,19 +115,19 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
       delay
     );
     return () => clearTimeout(id);
-  }, [reduced, typingDone, tab]);
+  }, [reduced, typingDone, tab, paused]);
 
   React.useEffect(() => {
     if (reduced) return;
-    if (miniProducts.length < 2) return;
+    if (miniProducts.length < 2 || paused) return;
     const id = window.setInterval(() => {
       setProductIndex((i) => (i + 1) % miniProducts.length);
     }, 3200);
     return () => clearInterval(id);
-  }, [reduced, miniProducts.length]);
+  }, [reduced, miniProducts.length, paused]);
 
   return (
-    <div className="relative min-w-0">
+    <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false); }} className="relative min-w-0">
       <div
         className="pointer-events-none absolute -inset-3 rounded-[2rem]"
         style={{
@@ -170,6 +171,7 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
 
           <div
             aria-hidden={tab !== "code"}
+            inert={tab !== "code"}
             className={cn(
               "col-start-1 row-start-1 min-w-0 transition-opacity duration-500",
               tab !== "code" && "pointer-events-none opacity-0"
@@ -214,6 +216,7 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
 
           <div
             aria-hidden={tab !== "product"}
+            inert={tab !== "product"}
             className={cn(
               "col-start-1 row-start-1 min-w-0 transition-opacity duration-500",
               tab !== "product" && "pointer-events-none opacity-0"
@@ -229,6 +232,7 @@ export function CodeTerminal({ products = [] }: { products?: SafeProduct[] }) {
                       i === productIndex ? "" : "pointer-events-none absolute inset-0 opacity-0"
                     )}
                     aria-hidden={i !== productIndex}
+                    inert={i !== productIndex}
                   >
                     <div className="flex items-start gap-2.5">
                       {p.image ? (

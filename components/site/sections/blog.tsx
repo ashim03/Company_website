@@ -87,10 +87,10 @@ export async function BlogSection({ content }: { content: Inner }) {
                     {text(post.excerpt)}
                   </p>
                 ) : null}
-                <span className="mt-auto inline-flex items-center gap-1 border-t border-border/60 pt-3.5 text-sm font-medium text-primary">
+                <Link href={`/insights/${post.slug}`} aria-label={`Read ${post.title}`} className="mt-auto inline-flex min-h-11 items-center gap-1 border-t border-border/60 pt-3.5 text-sm font-medium text-primary">
                   Read article
                   <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                </span>
+                </Link>
               </div>
             </article>
           </Reveal>

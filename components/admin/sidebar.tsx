@@ -31,6 +31,7 @@ const NAV = [
   { href: "/admin/clients", label: "Clients", icon: Users },
   { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
   { href: "/admin/team", label: "Team", icon: UserCircle },
+  { href: "/admin/careers", label: "Careers", icon: ClipboardList },
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle },
   { href: "/admin/courses", label: "Courses", icon: GraduationCap },
   { href: "/admin/blog", label: "Insights", icon: Newspaper },
