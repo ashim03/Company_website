@@ -19,18 +19,15 @@ export async function Footer() {
   const social = settings.social;
   const companyLinks = [
     { label: "About us", url: "/company" },
-    { label: "Careers", url: "/careers" },
-    { label: "How we work", url: "/process" },
     { label: "Our work", url: "/work" },
-    { label: "Classes", url: "/classes" },
-    { label: "Services", url: "/services" },
+    { label: "Careers", url: "/careers" },
+    { label: "Insights", url: "/insights" },
   ];
   const resourceLinks = [
-    { label: "Insights", url: "/insights" },
     { label: "Products", url: "/products" },
+    { label: "Classes & training", url: "/classes" },
+    { label: "How we work", url: "/process" },
     { label: "Contact", url: "/contact" },
-    { label: "Privacy Policy", url: "/privacy" },
-    { label: "Terms & Conditions", url: "/terms" },
   ];
 
   return (
@@ -114,7 +111,7 @@ export async function Footer() {
           </ul>
         </FooterColumn>
 
-        <FooterColumn title="Resources">
+        <FooterColumn title="Explore">
           <ul className="grid grid-cols-1 gap-2.5">
             {resourceLinks.map((l) => (
               <li key={l.url}>
@@ -127,11 +124,13 @@ export async function Footer() {
               </li>
             ))}
           </ul>
+          <p className="mt-6 text-sm font-medium text-foreground">Have something in mind?</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">Tell us about your project or the skills you want to learn.</p>
           <Link
             href="/contact"
             className="footer-consultation group mt-5 flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-[transform,box-shadow,background] hover:-translate-y-0.5"
           >
-            <span>Get a free consultation</span>
+            <span>Start a conversation</span>
             <span className="text-primary transition-transform group-hover:translate-x-0.5">
               →
             </span>
@@ -142,6 +141,7 @@ export async function Footer() {
       <div className="relative border-t border-border/50">
         <Container className="flex flex-col items-start justify-between gap-3 py-6 text-sm text-muted-foreground md:flex-row md:items-center">
           <p>{settings.footer.copyright}</p>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2 text-xs"><Link href="/privacy" className="py-2 hover:text-foreground">Privacy</Link><Link href="/terms" className="py-2 hover:text-foreground">Terms</Link><Link href="/cookies" className="py-2 hover:text-foreground">Cookies</Link></nav>
           <p className="font-mono text-xs text-muted-foreground">
             {"// Designed by humans. Built with AI."}
           </p>

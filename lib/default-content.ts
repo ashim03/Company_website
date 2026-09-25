@@ -52,8 +52,8 @@ export const defaultSiteSettings = {
   },
   footer: {
     about:
-      "CodAstraLabs builds focused SaaS products for real business operations.",
-    copyright: "Copyright 2026 CodAstraLabs. All rights reserved.",
+      "We build software, shape brands, and help businesses grow through digital marketing. Our practical classes turn new skills into real work.",
+    copyright: "© 2026 CodAstra Labs Pvt. Ltd. All rights reserved.",
   },
   design: {
     primary: "#2563eb",
